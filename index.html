@@ -1,45 +1,121 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FTC Team 37186 Supernova Portfolio</title>
+
+    <meta name="description" content="FTC Team 37186 Supernova — Engineering Portfolio">
+    <meta name="theme-color" content="#090b12">
+
+    <title>FTC 37186 | Supernova</title>
+
     <style>
-        body { font-family: sans-serif; background-color: #121214; color: #e2e8f0; margin: 0; padding: 2rem; text-align: center; }
-        header { border-bottom: 2px solid #ff6b00; padding-bottom: 1rem; margin-bottom: 2rem; }
-        h1 { color: #ff6b00; margin: 0; font-size: 2.5rem; }
-        .card { background: #1e1e24; padding: 2rem; border-radius: 8px; max-width: 650px; margin: 0 auto 1.5rem auto; text-align: left; }
-        .btn-group { display: flex; gap: 10px; margin-top: 1rem; flex-wrap: wrap; }
-        .btn { flex: 1; min-width: 200px; text-align: center; display: inline-block; padding: 0.8rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: bold; transition: 0.2s; }
-        .btn-blue { background-color: #00bcff; color: #121214; }
-        .btn-blue:hover { background-color: #0088cc; color: white; }
-        .btn-orange { background-color: #ff6b00; color: white; }
-        .btn-orange:hover { background-color: #cc5200; }
-        .robot-img { width: 100%; max-width: 500px; border-radius: 6px; border: 2px solid #ff6b00; display: block; margin: 1rem auto; }
-    </style>
-</head>
-<body>
+        :root {
+            --bg: #080a10;
+            --bg-soft: #0e111a;
+            --card: rgba(20, 24, 35, 0.78);
+            --card-solid: #141823;
+            --orange: #ff6b00;
+            --orange-light: #ff9a3c;
+            --blue: #00bfff;
+            --text: #f4f7fb;
+            --muted: #9da6b8;
+            --border: rgba(255,255,255,0.08);
+            --shadow: 0 20px 60px rgba(0,0,0,0.35);
+        }
 
-    <header>
-        <h1>🚀 FTC Team 37186: Supernova</h1>
-        <p>Official Progress Portfolio & Engineering Hub</p>
-    </header>
+        * {
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
 
-    <div class="card">
-        <h3>📍 Team Control Center</h3>
-        <p>Use the dashboards below to check current assignments, review project timelines, and track team homework updates.</p>
-        
-        <div class="btn-group">
-            <a href="PASTE_YOUR_PROJECT_BOARD_LINK_HERE" target="_blank" class="btn btn-blue">📋 Open Team Project Board</a>
-            <a href="./homework/" class="btn btn-orange">📝 View Homework Tracker</a>
-        </div>
-    </div>
+        body {
+            margin: 0;
+            font-family:
+                Inter, ui-sans-serif, system-ui, -apple-system,
+                BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background:
+                radial-gradient(circle at 15% 10%, rgba(255,107,0,0.12), transparent 28%),
+                radial-gradient(circle at 85% 20%, rgba(0,191,255,0.10), transparent 28%),
+                var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-    <div class="card">
-        <h3>🤖 Current Robot Progress</h3>
-        <p>This is what we have built so far! Here is a clean view of our current FTC robot drivetrain configuration and chassis layout as we continue testing and wiring our subsystems.</p>
-        <img src="robot.jpg" alt="FTC Team 37186 Robot Progress" class="robot-img">
-    </div>
+        /* ---------- NAVIGATION ---------- */
 
-</body>
-</html>
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(18px);
+            background: rgba(8,10,16,0.78);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            max-width: 1150px;
+            margin: auto;
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            color: white;
+            text-decoration: none;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: var(--orange);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        /* ---------- HERO ---------- */
+
+        .hero {
+            min-height: 82vh;
+            max-width: 1150px;
+            margin: auto;
+            padding: 100px 24px 80px;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 13px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,107,0,0.3);
+            background: rgba(255,107,0,0.08);
+            color: var(--orange-light);
+            font-size: 0.78rem;
+           
