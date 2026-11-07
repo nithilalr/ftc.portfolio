@@ -1,4 +1,4 @@
-
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -118,4 +118,690 @@
             background: rgba(255,107,0,0.08);
             color: var(--orange-light);
             font-size: 0.78rem;
-           
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            font-size: clamp(3.2rem, 8vw, 6.5rem);
+            line-height: 0.92;
+            letter-spacing: -5px;
+            margin: 22px 0;
+        }
+
+        h1 span {
+            display: block;
+            background: linear-gradient(90deg, #ff6b00, #ff9a3c, #00bfff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-text {
+            max-width: 650px;
+            color: var(--muted);
+            font-size: 1.15rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            padding: 13px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 800;
+            transition:
+                transform 0.2s,
+                box-shadow 0.2s,
+                background 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .btn-primary {
+            background: var(--orange);
+            color: white;
+            box-shadow: 0 10px 30px rgba(255,107,0,0.2);
+        }
+
+        .btn-primary:hover {
+            background: #ff7b1a;
+            box-shadow: 0 15px 40px rgba(255,107,0,0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.04);
+            border-color: var(--border);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.08);
+        }
+
+        /* ---------- ROBOT DISPLAY ---------- */
+
+        .robot-frame {
+            position: relative;
+            padding: 12px;
+            border-radius: 24px;
+            background: linear-gradient(
+                135deg,
+                rgba(255,107,0,0.5),
+                rgba(0,191,255,0.35)
+            );
+            box-shadow: var(--shadow);
+        }
+
+        .robot-frame::before {
+            content: "";
+            position: absolute;
+            inset: -40px;
+            background: radial-gradient(
+                circle,
+                rgba(255,107,0,0.12),
+                transparent 65%
+            );
+            z-index: -1;
+        }
+
+        .robot-frame img {
+            display: block;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            border-radius: 16px;
+            background: #11151e;
+        }
+
+        /* ---------- GENERAL ---------- */
+
+        section {
+            max-width: 1150px;
+            margin: auto;
+            padding: 90px 24px;
+        }
+
+        .section-label {
+            color: var(--orange);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.75rem;
+            font-weight: 900;
+            margin-bottom: 8px;
+        }
+
+        h2 {
+            margin: 0 0 14px;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            letter-spacing: -1.5px;
+        }
+
+        .section-intro {
+            max-width: 680px;
+            color: var(--muted);
+            margin-bottom: 40px;
+        }
+
+        /* ---------- STATS ---------- */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 45px;
+        }
+
+        .stat {
+            padding: 25px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: var(--card);
+            backdrop-filter: blur(12px);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--orange);
+        }
+
+        .stat-label {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        /* ---------- PROJECT CARDS ---------- */
+
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .project {
+            padding: 28px;
+            border-radius: 18px;
+            border: 1px solid var(--border);
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.055),
+                    rgba(255,255,255,0.015)
+                );
+            transition:
+                transform 0.25s,
+                border-color 0.25s;
+        }
+
+        .project:hover {
+            transform: translateY(-7px);
+            border-color: rgba(255,107,0,0.4);
+        }
+
+        .project-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .project h3 {
+            margin: 0 0 8px;
+        }
+
+        .project p {
+            color: var(--muted);
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        /* ---------- TIMELINE ---------- */
+
+        .timeline {
+            position: relative;
+            margin-top: 35px;
+            padding-left: 28px;
+            border-left: 2px solid rgba(255,107,0,0.3);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding: 0 0 38px 22px;
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -35px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--orange);
+            box-shadow: 0 0 20px rgba(255,107,0,0.6);
+        }
+
+        .timeline-date {
+            color: var(--orange);
+            font-size: 0.78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .timeline h3 {
+            margin: 5px 0;
+        }
+
+        .timeline p {
+            color: var(--muted);
+            margin: 0;
+        }
+
+        /* ---------- ENGINEERING ---------- */
+
+        .engineering {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .engineering-card {
+            padding: 30px;
+            border-radius: 18px;
+            background: var(--card);
+            border: 1px solid var(--border);
+        }
+
+        .engineering-card h3 {
+            margin-top: 0;
+        }
+
+        .engineering-card p {
+            color: var(--muted);
+        }
+
+        /* ---------- CTA ---------- */
+
+        .cta {
+            text-align: center;
+            padding: 70px 30px;
+            border-radius: 28px;
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(255,107,0,0.18),
+                    transparent 60%
+                ),
+                var(--card-solid);
+            border: 1px solid var(--border);
+        }
+
+        .cta p {
+            max-width: 600px;
+            margin: 0 auto 25px;
+            color: var(--muted);
+        }
+
+        /* ---------- FOOTER ---------- */
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 35px 24px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        footer strong {
+            color: white;
+        }
+
+        /* ---------- ANIMATIONS ---------- */
+
+        .fade-in {
+            animation: fadeIn 0.8s ease both;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ---------- MOBILE ---------- */
+
+        @media (max-width: 850px) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding-top: 70px;
+            }
+
+            h1 {
+                letter-spacing: -3px;
+            }
+
+            .projects {
+                grid-template-columns: 1fr;
+            }
+
+            .engineering {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        @media (max-width: 500px) {
+            section {
+                padding: 65px 18px;
+            }
+
+            .hero {
+                padding-left: 18px;
+                padding-right: 18px;
+            }
+
+            h1 {
+                font-size: 3.4rem;
+            }
+
+            .hero-buttons .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <div class="nav-inner">
+            <a href="#top" class="logo">
+                FTC <span>37186</span>
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#robot">Robot</a></li>
+                <li><a href="#engineering">Engineering</a></li>
+                <li><a href="#progress">Progress</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main id="top">
+
+        <!-- HERO -->
+        <section class="hero">
+
+            <div class="fade-in">
+                <div class="eyebrow">
+                    🚀 FTC Team 37186
+                </div>
+
+                <h1>
+                    WE ARE
+                    <span>SUPERNOVA.</span>
+                </h1>
+
+                <p class="hero-text">
+                    Welcome to the official engineering portfolio of
+                    FTC Team 37186. Explore our robot, engineering
+                    decisions, development process, and progress
+                    throughout the season.
+                </p>
+
+                <div class="hero-buttons">
+                    <a href="#robot" class="btn btn-primary">
+                        🤖 Explore Our Robot
+                    </a>
+
+                    <a href="#engineering" class="btn btn-secondary">
+                        ⚙️ Our Engineering
+                    </a>
+                </div>
+            </div>
+
+            <div class="robot-frame fade-in">
+                <img
+                    src="robot.jpg"
+                    alt="FTC Team 37186 Supernova robot"
+                    onerror="this.src='https://images.unsplash.com/photo-1535378917042-10a22c95931a?auto=format&fit=crop&w=1200&q=80';"
+                >
+            </div>
+
+        </section>
+
+        <!-- ABOUT -->
+        <section id="about">
+
+            <div class="section-label">01 / About Us</div>
+
+            <h2>Building. Testing. Improving.</h2>
+
+            <p class="section-intro">
+                Supernova is an FTC robotics team focused on combining
+                mechanical design, programming, electronics, and
+                teamwork to build a competitive robot and become
+                better engineers along the way.
+            </p>
+
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">37186</div>
+                    <div class="stat-label">FTC Team Number</div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Ideas Tested</div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-number">1</div>
+                    <div class="stat-label">Team Supernova</div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ROBOT -->
+        <section id="robot">
+
+            <div class="section-label">02 / The Robot</div>
+
+            <h2>Meet our machine.</h2>
+
+            <p class="section-intro">
+                This section documents our current robot configuration,
+                from drivetrain development to mechanisms, wiring,
+                software, and testing.
+            </p>
+
+            <div class="engineering">
+
+                <div class="engineering-card">
+                    <h3>🛞 Drivetrain</h3>
+                    <p>
+                        Our drivetrain provides the foundation for
+                        precise movement and reliable navigation around
+                        the field.
+                    </p>
+                </div>
+
+                <div class="engineering-card">
+                    <h3>⚙️ Mechanisms</h3>
+                    <p>
+                        We design and iterate mechanisms with a focus
+                        on reliability, speed, accessibility, and ease
+                        of maintenance.
+                    </p>
+                </div>
+
+                <div class="engineering-card">
+                    <h3>💻 Software</h3>
+                    <p>
+                        Our programming focuses on consistent
+                        autonomous routines, driver control, sensors,
+                        and repeatable robot behavior.
+                    </p>
+                </div>
+
+                <div class="engineering-card">
+                    <h3>🔌 Electronics</h3>
+                    <p>
+                        Clean wiring and organized electronics help us
+                        troubleshoot quickly and keep the robot
+                        competition-ready.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ENGINEERING -->
+        <section id="engineering">
+
+            <div class="section-label">03 / Engineering</div>
+
+            <h2>How we build.</h2>
+
+            <p class="section-intro">
+                Robotics is an iterative process. We prototype,
+                test, identify problems, make changes, and test again.
+            </p>
+
+            <div class="projects">
+
+                <article class="project">
+                    <div class="project-icon">💡</div>
+                    <h3>Ideation</h3>
+                    <p>
+                        We brainstorm multiple solutions before
+                        committing to a design.
+                    </p>
+                </article>
+
+                <article class="project">
+                    <div class="project-icon">🧪</div>
+                    <h3>Prototype</h3>
+                    <p>
+                        We quickly build and test concepts to discover
+                        what works in the real world.
+                    </p>
+                </article>
+
+                <article class="project">
+                    <div class="project-icon">🔧</div>
+                    <h3>Iteration</h3>
+                    <p>
+                        Every test gives us data that helps improve
+                        our next version.
+                    </p>
+                </article>
+
+                <article class="project">
+                    <div class="project-icon">📊</div>
+                    <h3>Evaluate</h3>
+                    <p>
+                        We compare designs based on reliability,
+                        performance, complexity, and repeatability.
+                    </p>
+                </article>
+
+                <article class="project">
+                    <div class="project-icon">🏆</div>
+                    <h3>Compete</h3>
+                    <p>
+                        Our final goal is a robot that performs
+                        consistently under competition conditions.
+                    </p>
+                </article>
+
+                <article class="project">
+                    <div class="project-icon">🚀</div>
+                    <h3>Improve</h3>
+                    <p>
+                        We keep learning throughout the season and
+                        carry those lessons into our next design.
+                    </p>
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- PROGRESS -->
+        <section id="progress">
+
+            <div class="section-label">04 / Progress</div>
+
+            <h2>Season development.</h2>
+
+            <p class="section-intro">
+                A living record of how our robot and team develop
+                throughout the season.
+            </p>
+
+            <div class="timeline">
+
+                <div class="timeline-item">
+                    <div class="timeline-date">Phase 01</div>
+                    <h3>Concept & Research</h3>
+                    <p>
+                        Research the game, identify priorities, and
+                        develop initial robot concepts.
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">Phase 02</div>
+                    <h3>Prototype</h3>
+                    <p>
+                        Build early mechanisms and drivetrain
+                        prototypes to validate our ideas.
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">Phase 03</div>
+                    <h3>Testing & Iteration</h3>
+                    <p>
+                        Test repeatedly, find weaknesses, and improve
+                        our robot's reliability.
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-date">Phase 04</div>
+                    <h3>Competition Ready</h3>
+                    <p>
+                        Finalize our systems, practice our strategy,
+                        and prepare for competition.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- CTA -->
+        <section>
+
+            <div class="cta">
+
+                <div class="section-label">FTC 37186</div>
+
+                <h2>Engineering the next version.</h2>
+
+                <p>
+                    This portfolio will continue to evolve as
+                    Supernova designs, builds, tests, and competes.
+                </p>
+
+                <a href="#top" class="btn btn-primary">
+                    ↑ Back to Top
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <strong>FTC Team 37186 — Supernova</strong>
+        <br>
+        Engineering Portfolio
+    </footer>
+
+</body>
+</html>
+```
