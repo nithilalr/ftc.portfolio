@@ -3,22 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FTC Team Progress Portfolio</title>
+    <title>FTC Team 37186 Supernova Portfolio</title>
     <style>
-        body { font-family: sans-serif; background-color: #121214; color: #e2e8f0; margin: 0; padding: 2rem; }
+        body { font-family: sans-serif; background-color: #121214; color: #e2e8f0; margin: 0; padding: 2rem; text-align: center; }
         header { border-bottom: 2px solid #ff6b00; padding-bottom: 1rem; margin-bottom: 2rem; }
-        h1 { color: #ff6b00; margin: 0; }
-        .card { background: #1e1e24; padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem; }
+        h1 { color: #ff6b00; margin: 0; font-size: 2.5rem; }
+        .card { background: #1e1e24; padding: 2rem; border-radius: 8px; max-width: 650px; margin: 0 auto 1.5rem auto; text-align: left; }
+        .btn-group { display: flex; gap: 10px; margin-top: 1rem; flex-wrap: wrap; }
+        .btn { flex: 1; min-width: 200px; text-align: center; display: inline-block; padding: 0.8rem 1.5rem; border-radius: 6px; text-decoration: none; font-weight: bold; transition: 0.2s; }
+        .btn-blue { background-color: #00bcff; color: #121214; }
+        .btn-blue:hover { background-color: #0088cc; color: white; }
+        .btn-orange { background-color: #ff6b00; color: white; }
+        .btn-orange:hover { background-color: #cc5200; }
+        .robot-img { width: 100%; max-width: 500px; border-radius: 6px; border: 2px solid #ff6b00; display: block; margin: 1rem auto; }
     </style>
 </head>
 <body>
+
     <header>
-        <h1>Supernova</h1>
-        <p>Tracking our build, code, and team journey.</p>
+        <h1>🚀 FTC Team 37186: Supernova</h1>
+        <p>Official Progress Portfolio & Engineering Hub</p>
     </header>
+
     <div class="card">
-        <h3>Current Status</h3>
-        <p>Welcome to our official progress site! Updates on robot design and testing coming soon.</p>
+        <h3>📍 Team Control Center</h3>
+        <p>Use the dashboards below to check current assignments, review project timelines, and track team homework updates.</p>
+        
+        <div class="btn-group">
+            <a href="PASTE_YOUR_PROJECT_BOARD_LINK_HERE" target="_blank" class="btn btn-blue">📋 Open Team Project Board</a>
+            <a href="./homework/" class="btn btn-orange">📝 View Homework Tracker</a>
+        </div>
     </div>
+
+    <div class="card">
+        <h3>🤖 Current Robot Progress</h3>
+        <p>This is what we have built so far! Here is a clean view of our current FTC robot drivetrain configuration and chassis layout as we continue testing and wiring our subsystems.</p>
+        <img src="robot.jpg" alt="FTC Team 37186 Robot Progress" class="robot-img">
+    </div>
+
 </body>
 </html>
