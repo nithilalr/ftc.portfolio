@@ -1,941 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="FTC Team 37186 Supernova — Engineering Notebook & Portfolio">
-    <meta name="theme-color" content="#fcfaf2">
-    <title>FTC 37186 | Supernova Engineering Notebook</title>
-
-    <style>
-        :root {
-            --desk-bg: #1e222b;
-            --paper: #fcfaf2;
-            --paper-alt: #f3efe2;
-            --grid-line: rgba(36, 99, 168, 0.10);
-            --grid-bold: rgba(36, 99, 168, 0.20);
-            --margin-red: rgba(217, 70, 70, 0.45);
-            --ink: #181c26;
-            --ink-muted: #525b6e;
-            --orange: #e85d04;
-            --orange-soft: rgba(232, 93, 4, 0.12);
-            --blue: #1d6fa5;
-            --blue-soft: rgba(29, 111, 165, 0.10);
-            --tape: rgba(255, 243, 176, 0.78);
-            --border: rgba(24, 28, 38, 0.15);
-            --shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
-            --code-bg: #0f1624;
-        }
-
-        body.blueprint-mode {
-            --desk-bg: #06090f;
-            --paper: #0c1424;
-            --paper-alt: #111d33;
-            --grid-line: rgba(0, 191, 255, 0.08);
-            --grid-bold: rgba(0, 191, 255, 0.17);
-            --margin-red: rgba(255, 107, 0, 0.45);
-            --ink: #f0f6fc;
-            --ink-muted: #93a8c4;
-            --orange: #ff7b1a;
-            --orange-soft: rgba(255, 123, 26, 0.15);
-            --blue: #38bdf8;
-            --blue-soft: rgba(56, 189, 248, 0.12);
-            --tape: rgba(255, 255, 255, 0.18);
-            --border: rgba(56, 189, 248, 0.22);
-            --shadow: 0 24px 60px rgba(0, 0, 0, 0.65);
-            --code-bg: #080d17;
-        }
-
-        * {
-            box-sizing: border-box;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            margin: 0;
-            padding: 28px 16px 64px;
-            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            background-color: var(--desk-bg);
-            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-            background-size: 20px 20px;
-            color: var(--ink);
-            line-height: 1.65;
-            transition: background-color 0.25s ease, color 0.25s ease;
-        }
-
-        .notebook-wrapper {
-            max-width: 1180px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .notebook-tabs {
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 8px;
-            padding: 0 20px 0 64px;
-        }
-
-        .tab-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-
-        .tab {
-            display: inline-block;
-            padding: 10px 15px;
-            background: var(--paper-alt);
-            color: var(--ink);
-            text-decoration: none;
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-            font-size: 0.78rem;
-            font-weight: 800;
-            border-radius: 10px 10px 0 0;
-            border: 1px solid var(--border);
-            border-bottom: none;
-            transition: transform 0.15s ease, background 0.15s ease;
-        }
-
-        .tab:hover {
-            transform: translateY(-3px);
-            background: var(--paper);
-            color: var(--orange);
-        }
-
-        .tab.active-tab {
-            background: var(--paper);
-            border-top: 3px solid var(--orange);
-        }
-
-        .mode-toggle {
-            cursor: pointer;
-            padding: 8px 14px;
-            margin-bottom: 6px;
-            border-radius: 6px;
-            border: 1px solid rgba(255, 255, 255, 0.22);
-            background: rgba(255, 255, 255, 0.08);
-            color: #f8fafc;
-            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-            font-size: 0.76rem;
-            font-weight: 700;
-        }
-
-        .mode-toggle:hover {
-            background: rgba(255, 255, 255, 0.16);
-        }
-
-        .notebook-page {
-            position: relative;
-            background-color: var(--paper);
-            background-image:
-                linear-gradient(to right, var(--grid-bold) 1px, transparent 1px),
-                linear-gradient(to bottom, var(--grid-bold) 1px, transparent 1px),
-                linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
-                linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
-            background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
-            border-radius: 6px 18px 18px 6px;
-            box-shadow: var(--shadow);
-            padding: 44px 48px 56px 84px;
-            border: 1px solid var(--border);
-            overflow: hidden;
-        }
-
-        .notebook-page::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 56px;
-            width: 2px;
-            background: var(--margin-red);
-        }
-
-        .spiral-binding {
-            position: absolute;
-            top: 24px;
-            bottom: 24px;
-            left: 10px;
-            width: 28px;
-            background-image:
-                radial-gradient(circle at 14px 18px, var(--desk-bg) 6px, transparent 7px),
-                linear-gradient(to right, #94a3b8, #cbd5e1, #64748b);
-            background-size: 28px 36px, 14px 36px;
-            background-repeat: repeat-y;
-            background-position: 0 0, 0 15px;
-            pointer-events: none;
-            opacity: 0.85;
-        }
-
-        .notebook-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            padding-bottom: 14px;
-            margin-bottom: 36px;
-            border-bottom: 2px solid var(--ink);
-            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-            font-size: 0.8rem;
-        }
-
-        .stamp-box {
-            border: 2px solid var(--orange);
-            color: var(--orange);
-            padding: 4px 10px;
-            font-weight: 900;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            transform: rotate(-1.5deg);
-        }
-
-        section {
-            padding: 52px 0;
-            border-bottom: 1.5px dashed var(--border);
-        }
-
-        section:first-of-type {
-            padding-top: 10px;
-        }
-
-        section:last-of-type {
-            border-bottom: none;
-            padding-bottom: 16px;
-        }
-
-        .section-header-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 24px;
-        }
-
-        .section-label {
-            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-            color: var(--blue);
-            font-size: 0.8rem;
-            font-weight: 900;
-            letter-spacing: 1.2px;
-            text-transform: uppercase;
-            margin-bottom: 4px;
-        }
-
-        .section-tag-right {
-            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-            font-size: 0.76rem;
-            font-weight: 700;
-            color: var(--ink-muted);
-            letter-spacing: 0.8px;
-            text-transform: uppercase;
-        }
-
-        h1 {
-            font-size: clamp(2.8rem, 6vw, 4.8rem);
-            line-height: 0.95;
-            letter-spacing: -2.5px;
-            margin: 10px 0 18px;
-        }
-
-        h1 span {
-            display: block;
-            color: var(--orange);
-            text-decoration: underline;
-            text-decoration-style: wavy;
-            text-decoration-thickness: 3px;
-            text-underline-offset: 8px;
-        }
-
-        h2 {
-            margin: 0;
-            font-size: clamp(1.85rem, 4vw, 2.7rem);
-            letter-spacing: -1.2px;
-            text-transform: uppercase;
-        }
-
-        .section-intro {
-            max-width: 680px;
-            color: var(--ink-muted);
-            margin: 10px 0 28px;
-        }
-
-        .hero {
-            display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-            align-items: center;
-            gap: 42px;
-        }
-
-        .eyebrow {
-            display: inline-block;
-            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-            font-size: 0.78rem;
-            font-weight: 800;
-            color: var(--blue);
-            background: var(--blue-soft);
-            padding: 5px 10px;
-            border-radius: 4px;
-        }
-
-        .hero-text {
-            color: var(--ink-muted);
-            font-size: 1.05rem;
-            margin-bottom: 24px;
-        }
-
-        .hero-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 11px 18px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-            font-weight: 800;
-            font-size: 0.85rem;
-            transition: transform 0.15s ease;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .btn-primary {
-            background: var(--orange);
-            color: #ffffff;
-            box-shadow: 3px 3px 0px var(--ink);
-        }
-
-        .btn-secondary {
-            background: var(--paper-alt);
-            color: var(--ink);
-            border: 1.5px solid var(--ink);
-            box-shadow: 3px 3px 0px var(--ink);
-        }
-
-        .taped-card {
-            position: relative;
-            background: #ffffff;
-            padding: 10px 10px 14px;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FTC 37186 | Supernova Engineering Notebook</title>
+<style>
+:root{--desk-bg:#1e222b;--paper:#fcfaf2;--paper-alt:#f3efe2;--grid-line:rgba(36,99,168,.1);--grid-bold:rgba(36,99,168,.2);--margin-red:rgba(217,70,70,.45);--ink:#181c26;--ink-muted:#525b6e;--orange:#e85d04;--blue:#1d6fa5;--blue-soft:rgba(29,111,165,.1);--tape:rgba(255,243,176,.78);--border:rgba(24,28,38,.15);--shadow:0 20px 50px rgba(0,0,0,.35);--code-bg:#0f1624}
+body.blueprint-mode{--desk-bg:#06090f;--paper:#0c1424;--paper-alt:#111d33;--grid-line:rgba(0,191,255,.08);--grid-bold:rgba(0,191,255,.17);--margin-red:rgba(255,107,0,.45);--ink:#f0f6fc;--ink-muted:#93a8c4;--orange:#ff7b1a;--blue:#38bdf8;--blue-soft:rgba(56,189,248,.12);--tape:rgba(255,255,255,.18);--border:rgba(56,189,248,.22);--shadow:0 24px 60px rgba(0,0,0,.65);--code-bg:#080d17}
+*{box-sizing:border-box;scroll-behavior:smooth}
+body{margin:0;padding:28px 16px 64px;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background-color:var(--desk-bg);background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1px);background-size:20px 20px;color:var(--ink);line-height:1.65;transition:background-color .25s ease,color .25s ease}
+.notebook-wrapper{max-width:1180px;margin:0 auto;position:relative}
+.notebook-tabs{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:0 20px 0 64px}
+.tab-group{display:flex;flex-wrap:wrap;gap:6px}
+.tab{display:inline-block;padding:10px 15px;background:var(--paper-alt);color:var(--ink);text-decoration:none;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:.78rem;font-weight:800;border-radius:10px 10px 0 0;border:1px solid var(--border);border-bottom:none;transition:transform .15s ease,background .15s ease}
+.tab:hover{transform:translateY(-3px);background:var(--paper);color:var(--orange)}
+.tab.active-tab{background:var(--paper);border-top:3px solid var(--orange)}
+.mode-toggle{cursor:pointer;padding:8px 14px;margin-bottom:6px;border-radius:6px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#f8fafc;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.76rem;font-weight:700}
+.mode-toggle:hover{background:rgba(255,255,255,.16)}
+.notebook-page{position:relative;background-color:var(--paper);background-image:linear-gradient(to right,var(--grid-bold) 1px,transparent 1px),linear-gradient(to bottom,var(--grid-bold) 1px,transparent 1px),linear-gradient(to right,var(--grid-line) 1px,transparent 1px),linear-gradient(to bottom,var(--grid-line) 1px,transparent 1px);background-size:100px 100px,100px 100px,20px 20px,20px 20px;border-radius:6px 18px 18px 6px;box-shadow:var(--shadow);padding:44px 48px 56px 84px;border:1px solid var(--border);overflow:hidden}
+.notebook-page::before{content:"";position:absolute;top:0;bottom:0;left:56px;width:2px;background:var(--margin-red)}
+.spiral-binding{position:absolute;top:24px;bottom:24px;left:10px;width:28px;background-image:radial-gradient(circle at 14px 18px,var(--desk-bg) 6px,transparent 7px),linear-gradient(to right,#94a3b8,#cbd5e1,#64748b);background-size:28px 36px,14px 36px;background-repeat:repeat-y;background-position:0 0,0 15px;pointer-events:none;opacity:.85}
+.notebook-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding-bottom:14px;margin-bottom:36px;border-bottom:2px solid var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:.8rem}
+.stamp-box{border:2px solid var(--orange);color:var(--orange);padding:4px 10px;font-weight:900;letter-spacing:1px;text-transform:uppercase;transform:rotate(-1.5deg)}
+section{padding:52px 0;border-bottom:1.5px dashed var(--border)}
+section:first-of-type{padding-top:10px}
+section:last-of-type{border-bottom:none;padding-bottom:16px}
+.section-header-row{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;margin-bottom:24px}
+.section-label{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--blue);font-size:.8rem;font-weight:900;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:4px}
+.section-tag-right{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.76rem;font-weight:700;color:var(--ink-muted);letter-spacing:.8px;text-transform:uppercase}
+h1{font-size:clamp(2.8rem,6vw,4.8rem);line-height:.95;letter-spacing:-2.5px;margin:10px 0 18px}
+h1 span{display:block;color:var(--orange);text-decoration:underline;text-decoration-style:wavy;text-decoration-thickness:3px;text-underline-offset:8px}
+h2{margin:0;font-size:clamp(1.85rem,4vw,2.7rem);letter-spacing:-1.2px;text-transform:uppercase}
+.section-intro{max-width:680px;color:var(--ink-muted);margin:10px 0 28px}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:42px}
+.eyebrow{display:inline-block;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.78rem;font-weight:800;color:var(--blue);background:var(--blue-soft);padding:5px 10px;border-radius:4px}
+.hero-text{color:var(--ink-muted);font-size:1.05rem;margin-bottom:24px}
+.hero-buttons{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:6px;text-decoration:none;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-weight:800;font-size:.85rem;transition:transform .15s ease}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:var(--orange);color:#fff;box-shadow:3px 3px 0 var(--ink)}
+.btn-secondary{background:var(--paper-alt);color:var(--ink);border:1.5px solid var(--ink);box-shadow:3px 3px 0 var(--ink)}
+.taped-card{position:relative;background:#fff;padding:10px 10px 14px;border:1px solid rgba(0,0,0,.16);box-shadow:0 10px 24px rgba(0,0,0,.14)}
+body.blueprint-mode .taped-card{background:#132038;border-color:var(--border)}
+.taped-card::before{content:"";position:absolute;top:-11px;left:50%;transform:translateX(-50%) rotate(-1.5deg);width:96px;height:22px;background:var(--tape);border-left:1px dashed rgba(0,0,0,.12);border-right:1px dashed rgba(0,0,0,.12);box-shadow:0 2px 4px rgba(0,0,0,.08);z-index:2}
+.taped-card img,.taped-card video{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:#0f172a}
+.fig-caption{margin-top:9px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.72rem;font-weight:700;color:var(--ink-muted);letter-spacing:.4px;text-transform:uppercase}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.stat{padding:20px;background:var(--paper-alt);border:1.5px solid var(--border);border-top:4px solid var(--blue);border-radius:4px}
+.stat-number{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:2rem;font-weight:900;color:var(--orange)}
+.stat-label{font-size:.88rem;font-weight:700;color:var(--ink-muted)}
+.time-stream{display:flex;gap:22px;overflow-x:auto;padding:14px 4px 20px;scroll-snap-type:x mandatory}
+.stream-card{min-width:100%;scroll-snap-align:start;position:relative;border:2px solid var(--ink);border-radius:8px;overflow:hidden;background:#0c111d;box-shadow:6px 6px 0 var(--ink)}
+.stream-card video,.stream-card img{display:block;width:100%;max-height:460px;object-fit:cover}
+.stream-badge-top{position:absolute;top:16px;left:16px;background:rgba(15,23,42,.82);color:#f8fafc;border:1px solid rgba(255,255,255,.25);padding:5px 10px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.74rem;font-weight:800;letter-spacing:.8px}
+.stream-overlay-bottom{position:absolute;left:0;right:0;bottom:0;padding:28px 20px 16px;background:linear-gradient(to top,rgba(8,12,20,.92),transparent);display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:10px;color:#fff}
+.stream-sub{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.72rem;color:#38bdf8;font-weight:800;letter-spacing:.8px}
+.stream-title{font-size:1.2rem;font-weight:900;letter-spacing:-.3px}
+.stream-code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.74rem;color:#cbd5e1}
+.engineering{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:28px}
+.engineering-card{padding:22px;background:var(--paper-alt);border:1.5px solid var(--border);border-radius:6px}
+.engineering-card h3{margin:0 0 6px;font-size:1.1rem}
+.engineering-card p{margin:0;color:var(--ink-muted);font-size:.92rem}
+.iteration-layout{display:grid;grid-template-columns:1.35fr .85fr;gap:28px;align-items:start}
+.fig-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.log-notes-box{background:var(--paper-alt);border:1.5px solid var(--ink);border-radius:6px;padding:24px;box-shadow:5px 5px 0 var(--ink)}
+.log-notes-box h3{margin:0 0 12px;font-size:1.35rem;letter-spacing:-.5px;text-transform:uppercase}
+.log-notes-box p{margin:0 0 14px;font-size:.93rem;color:var(--ink-muted)}
+.spec-table{width:100%;border-collapse:collapse;margin:18px 0;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.78rem}
+.spec-table td{padding:9px 4px;border-bottom:1px solid var(--border)}
+.spec-table td:first-child{color:var(--ink-muted);font-weight:700;text-transform:uppercase}
+.spec-table td:last-child{text-align:right;font-weight:800;color:var(--ink)}
+.next-step-callout{margin-top:16px;padding-left:14px;border-left:3px solid var(--blue)}
+.next-step-label{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.74rem;font-weight:900;color:var(--blue);letter-spacing:.8px;margin-bottom:4px}
+.next-step-callout p{margin:0;font-size:.9rem;color:var(--ink)}
+.code-section-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:28px;align-items:start}
 Use code with caution.
-border: 1px solid rgba(0, 0, 0, 0.16);
-box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
-}
-body.blueprint-mode .taped-card {
-background: #132038;
-border-color: var(--border);
-}
-.taped-card::before {
-content: "";
-position: absolute;
-top: -11px;
-left: 50%;
-transform: translateX(-50%) rotate(-1.5deg);
-width: 96px;
-height: 22px;
-background: var(--tape);
-border-left: 1px dashed rgba(0, 0, 0, 0.12);
-border-right: 1px dashed rgba(0, 0, 0, 0.12);
-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
-z-index: 2;
-}
-.taped-card img,
-.taped-card video {
-display: block;
-width: 100%;
-aspect-ratio: 4 / 3;
-object-fit: cover;
-background: #0f172a;
-}
-.fig-caption {
-margin-top: 9px;
-font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-font-size: 0.72rem;
-font-weight: 700;
-color: var(--ink-muted);
-letter-spacing: 0.4px;
-text-transform: uppercase;
-}
-.stats {
-display: grid;
-grid-template-columns: repeat(3, 1fr);
-gap: 16px;
-}
-.stat {
-padding: 20px;
-background: var(--paper-alt);
-border: 1.5px solid var(--border);
-border-top: 4px solid var(--blue);
-border-radius: 4px;
-}
-.stat-number {
-font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-font-size: 2rem;
-font-weight: 900;
-color: var(--orange);
-}
-.stat-label {
-font-size: 0.88rem;
-font-weight: 700;
-color: var(--ink-muted);
-}
-.time-stream {
-display: flex;
-gap: 22px;
-overflow-x: auto;
-padding: 14px 4px 20px;
-scroll-snap-type: x mandatory;
-}
-.stream-card {
-min-width: 100%;
-scroll-snap-align: start;
-position: relative;
-border: 2px solid var(--ink);
-border-radius: 8px;
-overflow: hidden;
-background: #0c111d;
-box-shadow: 6px 6px 0px var(--ink);
-}
-.stream-card video,
-.stream-card img {
-display: block;
-width: 100%;
-max-height: 460px;
-object-fit: cover;
-}
-.stream-badge-top {
-position: absolute;
-top: 16px;
-left: 16px;
-background: rgba(15, 23, 42, 0.82);
-color: #f8fafc;
-border: 1px solid rgba(255, 255, 255, 0.25);
-padding: 5px 10px;
-font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-font-size: 0.74rem;
-font-weight: 800;
-letter-spacing: 0.8px;
-}
-.stream-overlay-bottom {
-position: absolute;
-left: 0;
-right: 0;
-bottom: 0;
-padding: 28px 20px 16px;
-background: linear-gradient(to top, rgba(8, 12, 20, 0.92), transparent);
-display: flex;
-justify-content: space-between;
-align-items: flex-end;
-flex-wrap: wrap;
-gap: 10px;
-color: #ffffff;
-}
-.stream-sub {
-font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-font-size: 0.72rem;
-color: #38bdf8;
-font-weight: 800;
-letter-spacing: 0.8px;
-}
-.stream-title {
-font-size: 1.2rem;
-font-weight: 900;
-letter-spacing: -0.3px;
-}
-.stream-code {
-font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-font-size: 0.74rem;
-color: #cbd5e1;
-}
-.engineering {
-display: grid;
-grid-template-columns: repeat(2, 1fr);
-gap: 16px;
-margin-top: 28px;
-}
-.engineering-card {
-padding: 22px;
-background: var(--paper-alt);
-border: 1.5px solid var(--border);
-border-radius: 6px;
-}
-.engineering-card h3 {
-margin: 0 0 6px;
-font-size: 1.1rem;
-}
-.engineering-card p {
-margin: 0;
-color: var(--ink-muted);
-font-size: 0.92rem;
-}
-.iteration-layout {
-display: grid;
-grid-template-columns: 1.35fr 0.85fr;
-gap: 28px;
-align-items: start;
-}
-.fig-grid {
-display: grid;
-grid-template-columns: repeat(2, 1fr);
-gap: 20px;
-}
-.log-notes-box {
-background: var(--paper-alt);
-border: 1.5px solid var(--ink);
-border-radius: 6px;
-padding: 24px;
-box-shadow: 5px 5px 0px var(--ink);
-}
-.log-notes-box h3 {
-margin: 0 0 12px;
-font-size: 1.35rem;
-letter-spacing: -0.5px;
-text-transform: uppercase;
-}
-.log-notes-box p {
-margin: 0 0 14px;
-font-size: 0.93rem;
-color: var(--ink-muted);
-}
-.spec-table {
-width: 100%;
-border-collapse: collapse;
-margin: 18px 0;
-font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-font-size: 0.78rem;
-}
-.spec-table td {
-padding: 9px 4px;
-border-bottom: 1px solid var(--border);
-}
-.spec-table td:first-child {
-color: var(--ink-muted);
-font-weight: 700;
-text-transform: uppercase;
-}
-.spec-table td:last-child {
-text-align: right;
-font-weight: 800;
-color: var(--ink);
-}
-.next-step-callout {
-margin-top: 16px;
-padding-left: 14px;
-border-left: 3px solid var(--blue);
-}
-.next-step-label {
-font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-font-size: 0.74rem;
-font-weight: 900;
-color: var(--blue);
-letter-spacing: 0.8px;
-margin-bottom: 4px;
-}
-.next-step-callout p {
-margin: 0;
-font-size: 0.9rem;
-color: var(--ink);
-}
-.code-section-grid {
-display: grid;
-grid-template-columns: 0.9fr 1.1fr;
-gap: 28px;
-align-items: start;
-}
-.control-stack-label {
-font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-font-size: 0.76rem;
-font-weight: 800;
-color: var(--ink-muted);
-letter-spacing: 1px;
-margin-bottom: 14px;
-}
-.stack-item {
-display: grid;
-grid-template-columns: 32px 1fr;
-gap: 12px;
-padding: 14px 0;
-border-bottom: 1px solid var(--border);
-}
-.stack-item:last-child {
-border-bottom: none;
-}
-.stack-num {
-font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-font-size: 0.8rem;
-font-weight: 900;
-color: var(--blue);
-padding-top: 2px;
-}
-.stack-top {
-display: flex;
-justify-content: space-between;
-align-items: baseline;
-flex-wrap: wrap;
-gap: 8px;
-margin-bottom: 4px;
-}
-.stack-title {
-font-weight: 900;
-font-size: 0.98rem;
-letter-spacing: 0.3px;
-}
-.stack-tech {
-font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-font-size: 0.74rem;
-font-weight: 700;
-color: var(--blue);
-}
-.stack-desc {
-margin: 0;
-font-size: 0.88rem;
-color: var(--ink-muted);
-}
-.ide-window {
-background: var(--code-bg);
-color: #e2e8f0;
-border-radius: 10px;
-border: 2px solid var(--ink);
-box-shadow: 6px 6px 0px var(--ink);
-overflow: hidden;
-}
-.ide-topbar {
-display: flex;
-justify-content: space-between;
-align-items: center;
-flex-wrap: wrap;
-gap: 10px;
-padding: 12px 16px;
-background: rgba(255, 255, 255, 0.04);
-border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-.ide-dots-title {
-display: flex;
-align-items: center;
-gap: 10px;
-font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-font-size: 0.74rem;
-color: #94a3b8;
-}
-.ide-dots {
-display: flex;
-gap: 6px;
-}
-.ide-dots span {
-width: 9px;
-height: 9px;
-border-radius: 50%;
-background: #475569;
-}
-.ide-dots span:first-child {
-background: #3b82f6;
-}
-.ide-tabs {
-display: flex;
-gap: 6px;
-}
-.ide-tab-btn {
-cursor: pointer;
-border: none;
-padding: 5px 10px;
-border-radius: 4px;
-background: transparent;
-color: #94a3b8;
-font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-font-size: 0.72rem;
-font-weight: 800;
-transition: background 0.15s, color 0.15s;
-}
-.ide-tab-btn:hover {
-color: #ffffff;
-}
-.ide-tab-btn.active {
-background: #3b82f6;
-color: #ffffff;
-}
-.ide-body {
-padding: 20px;
-font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-font-size: 0.82rem;
-line-height: 1.65;
-overflow-x: auto;
-min-height: 225px;
-}
-.code-panel {
-display: none;
-margin: 0;
-white-space: pre;
-}
-.code-panel.active {
-display: block;
-}
-.c-comment { color: #64748b; }
-.c-keyword { color: #60a5fa; font-weight: 700; }
-.c-method { color: #f8fafc; }
-.c-const { color: #fb923c; }
-.ide-footer {
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 9px 16px;
-background: rgba(255, 255, 255, 0.03);
-border-top: 1px solid rgba(255, 255, 255, 0.1);
-font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-font-size: 0.7rem;
-color: #64748b;
-}
-.status-compiled {
-color: #60a5fa;
-font-weight: 700;
-}
-.projects {
-display: grid;
-grid-template-columns: repeat(3, 1fr);
-gap: 16px;
-}
-.project {
-padding: 20px;
-background: var(--paper-alt);
-border: 1.5px solid var(--border);
-border-radius: 6px;
-}
-.project-icon {
-font-size: 1.5rem;
-margin-bottom: 8px;
-}
-.project h3 {
-margin: 0 0 6px;
-font-size: 1.05rem;
-}
-.project p {
-margin: 0;
-font-size: 0.9rem;
-color: var(--ink-muted);
-}
-.timeline {
-margin-top: 24px;
-padding-left: 24px;
-border-left: 2px solid var(--orange);
-}
-.timeline-item {
-position: relative;
-padding: 0 0 26px 18px;
-}
-.timeline-item::before {
-content: "✓";
-position: absolute;
-left: -34px;
-top: 0;
-width: 20px;
-height: 20px;
-border-radius: 50%;
-background: var(--orange);
-color: white;
-font-size: 0.72rem;
-font-weight: 900;
-display: flex;
-align-items: center;
-justify-content: center;
-}
-.timeline-date {
-font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-color: var(--blue);
-font-size: 0.78rem;
-font-weight: 800;
-}
-.timeline h3 {
-margin: 4px 0;
-}
-.timeline p {
-margin: 0;
-color: var(--ink-muted);
-}
-footer {
-margin-top: 24px;
-padding-top: 20px;
-border-top: 2px solid var(--ink);
-display: flex;
-justify-content: space-between;
-flex-wrap: wrap;
-gap: 10px;
-font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-font-size: 0.8rem;
-color: var(--ink-muted);
-}
-@media (max-width: 920px) {
-.hero,
-.iteration-layout,
-.code-section-grid,
-.engineering,
-.projects,
-.stats {
-grid-template-columns: 1fr;
-}
-}
-@media (max-width: 650px) {
-.notebook-page {
-padding: 28px 20px 36px 40px;
-}
-.notebook-page::before {
-left: 26px;
-}
-.spiral-binding {
-display: none;
-}
-.notebook-tabs {
-padding-left: 8px;
-}
-.fig-grid {
-grid-template-columns: 1fr;
-}
-}
+.control-stack-label{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.76rem;font-weight:800;color:var(--ink-muted);letter-spacing:1px;margin-bottom:14px}
+.stack-item{display:grid;grid-template-columns:32px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid var(--border)}
+.stack-item:last-child{border-bottom:none}
+.stack-num{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.8rem;font-weight:900;color:var(--blue);padding-top:2px}
+.stack-top{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:4px}
+.stack-title{font-weight:900;font-size:.98rem;letter-spacing:.3px}
+.stack-tech{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.74rem;font-weight:700;color:var(--blue)}
+.stack-desc{margin:0;font-size:.88rem;color:var(--ink-muted)}
+.ide-window{background:var(--code-bg);color:#e2e8f0;border-radius:10px;border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);overflow:hidden}
+.ide-topbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding:12px 16px;background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.1)}
+.ide-dots-title{display:flex;align-items:center;gap:10px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.74rem;color:#94a3b8}
+.ide-dots{display:flex;gap:6px}
+.ide-dots span{width:9px;height:9px;border-radius:50%;background:#475569}
+.ide-dots span:first-child{background:#3b82f6}
+.ide-tabs{display:flex;gap:6px}
+.ide-tab-btn{cursor:pointer;border:none;padding:5px 10px;border-radius:4px;background:transparent;color:#94a3b8;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.72rem;font-weight:800}
+.ide-tab-btn.active{background:#3b82f6;color:#fff}
+.ide-body{padding:20px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.82rem;line-height:1.65;overflow-x:auto;min-height:225px}
+.code-panel{display:none;margin:0;white-space:pre}
+.code-panel.active{display:block}
+.c-comment{color:#64748b}.c-keyword{color:#60a5fa;font-weight:700}.c-method{color:#f8fafc}.c-const{color:#fb923c}
+.ide-footer{display:flex;justify-content:space-between;align-items:center;padding:9px 16px;background:rgba(255,255,255,.03);border-top:1px solid rgba(255,255,255,.1);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.7rem;color:#64748b}
+.status-compiled{color:#60a5fa;font-weight:700}
+.projects{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.project{padding:20px;background:var(--paper-alt);border:1.5px solid var(--border);border-radius:6px}
+.project-icon{font-size:1.5rem;margin-bottom:8px}
+.project h3{margin:0 0 6px;font-size:1.05rem}
+.project p{margin:0;font-size:.9rem;color:var(--ink-muted)}
+.timeline{margin-top:24px;padding-left:24px;border-left:2px solid var(--orange)}
+.timeline-item{position:relative;padding:0 0 26px 18px}
+.timeline-item::before{content:"✓";position:absolute;left:-34px;top:0;width:20px;height:20px;border-radius:50%;background:var(--orange);color:#fff;font-size:.72rem;font-weight:900;display:flex;align-items:center;justify-content:center}
+.timeline-date{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--blue);font-size:.78rem;font-weight:800}
+.timeline h3{margin:4px 0}
+.timeline p{margin:0;color:var(--ink-muted)}
+footer{margin-top:24px;padding-top:20px;border-top:2px solid var(--ink);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.8rem;color:var(--ink-muted)}
+@media (max-width:920px){.hero,.iteration-layout,.code-section-grid,.engineering,.projects,.stats{grid-template-columns:1fr}}
+@media (max-width:650px){.notebook-page{padding:28px 20px 36px 40px}.notebook-page::before{left:26px}.spiral-binding{display:none}.notebook-tabs{padding-left:8px}.fig-grid{grid-template-columns:1fr}}
 
 
-00_COVER
-01_TEAM
-02_ROBOT
-03_ITERATIONS
-04_CODE
-05_LOGBOOK
+---
 
+### PART 2 (Bottom Half — Copy & Paste Directly Below Part 1)
 
-📐 Toggle Blueprint / Lab Paper
-
-DOC ID: FTC-37186-NB  |  TEAM: SUPERNOVA
-ENGINEERING PORTFOLIO
-🚀 FIRST TECH CHALLENGE // TEAM 37186
-
-WE ARE
-SUPERNOVA.
-Official engineering notebook and build log of FTC Team 37186.
-Documenting our mechanical design, CAD iterations, software
-architecture, and field testing throughout the season.
-🤖 Machine Schematics
-📓 Iteration Log
-💻 Control Stack
-
-FIG 0.1 — SUPERNOVA PROTOTYPE FIELD TEST
-
-01 // TEAM OVERVIEW
-Building. Testing. Improving.
-
-TEAM ROSTER & METRICS
-Supernova is an FTC robotics team focused on combining mechanical
-design, programming, electronics, and teamwork to build a
-competitive robot and become better engineers along the way.
-37186
-FTC Team Number
-
-
-∞
-Ideas Tested
-
-
-1
-Team Supernova
-
-02 / MACHINE SCHEMATICS
-The Robot
-
-TIME-STREAM // SCROLL HORIZONTALLY →
-ITERATION 01
-FIRST FUNCTIONAL BUILD
-FIELD TEST // CHASSIS & DRIVETRAIN
-
-SYS-01 / LOOP
-
-
-🛞 Drivetrain
-Our drivetrain provides the foundation for precise movement and reliable navigation around the field.
-⚙️ Mechanisms
-We design and iterate mechanisms with a focus on reliability, speed, accessibility, and ease of maintenance.
-💻 Software
-Our programming focuses on consistent autonomous routines, driver control, sensors, and repeatable robot behavior.
-🔌 Electronics
-Clean wiring and organized electronics help us troubleshoot quickly and keep the robot competition-ready.
-03 / ITERATION LOG
-Iteration Log
-
-INTAKE DEVELOPMENT
-FIG. A — VECTORED WHEEL PAIR
-FIG. B — WHEEL PARTS & ROLLER SET
-FIG. C — BUILD FLOOR CAD CHECK
-FIG. D — FITMENT & FIELD TESTING
-FIG. E — ONSHAPE CHASSIS ASSEMBLY
-FIG. F — TURRET BASE PLATE
-
-Vectored Wheel Intake
-In this iteration we moved the intake rollers over to vectored wheels,
-so the angled rollers pull game pieces in more smoothly and keep them
-from getting stuck or misaligned at the mouth of the intake. Fig. A
-shows the printed pair; Fig. B shows the parts that make up each wheel —
-the hub and the individual rollers that press into its circumference.
-The wheels came out slightly too large to seat cleanly inside the intake
-design, so the fitment is being adjusted before the assembly goes back
-onto the robot.
-Figs. C through F are the CAD side of the same iteration — modeling and
-reviewing the chassis assembly and turret base plate in Onshape, then
-checking the printed parts against the model on the build floor.
-
-Iteration
-	IT-02
-Subsystem
-	Intake
-Part
-	Vectored guide wheels
-Process
-	FDM / PLA
-Status
-	In fitment
-
-NEXT STEP
-Resize the wheel diameter against the intake envelope, reprint,
-and re-test the assembly on the robot.
-04 / SOFTWARE LAYER
-The Code
-
-JAVA // OPENCV // FTC SDK
-CONTROL STACK
-01
-
-
-AUTONOMOUS
-OpenCV + AprilTags
-Vision-based localization and scoring during the 30s auto phase.
-02
-
-
-TELE-OP
-Java / FTC SDK
-Driver-controlled state machine with closed-loop PID on all actuators.
-03
-
-
-PERCEPTION
-ONNX Runtime
-On-device inference for specimen classification and target lock.
-04
-
-
-TELEMETRY
-FTC Dashboard
-Live tuning of gains, paths, and sensor offsets from the pit.
-SUPERNOVA.ROBOT / AUTO.JAVA
-
-
-AUTONOMOUS
+```html
+<body>
+<div class="notebook-wrapper" id="top">
+  <nav class="notebook-tabs">
+    <div class="tab-group">
+      <a href="#top" class="tab active-tab">00_COVER</a>
+      <a href="#about" class="tab">01_TEAM</a>
+      <a href="#robot" class="tab">02_ROBOT</a>
+      <a href="#iterations" class="tab">03_ITERATIONS</a>
+      <a href="#code" class="tab">04_CODE</a>
+      <a href="#progress" class="tab">05_LOGBOOK</a>
+    </div>
+    <button class="mode-toggle" onclick="document.body.classList.toggle('blueprint-mode')">📐 Toggle Blueprint / Lab Paper</button>
+  </nav>
+  <main class="notebook-page">
+    <div class="spiral-binding" aria-hidden="true"></div>
+    <div class="notebook-header">
+      <div><strong>DOC ID:</strong> FTC-37186-NB &nbsp;|&nbsp; <strong>TEAM:</strong> SUPERNOVA</div>
+      <div class="stamp-box">ENGINEERING PORTFOLIO</div>
+    </div>
+    <section>
+      <div class="hero">
+        <div>
+          <div class="eyebrow">🚀 FIRST TECH CHALLENGE // TEAM 37186</div>
+          <h1>WE ARE <span>SUPERNOVA.</span></h1>
+          <p class="hero-text">Official engineering notebook and build log of FTC Team 37186. Documenting our mechanical design, CAD iterations, software architecture, and field testing throughout the season.</p>
+          <div class="hero-buttons">
+            <a href="#robot" class="btn btn-primary">🤖 Machine Schematics</a>
+            <a href="#iterations" class="btn btn-secondary">📓 Iteration Log</a>
+            <a href="#code" class="btn btn-secondary">💻 Control Stack</a>
+          </div>
+        </div>
+        <div class="taped-card">
+          <video autoplay loop muted playsinline poster="https://images.unsplash.com/photo-1535378917042-10a22c95931a?auto=format&fit=crop&w=1200&q=80">
+            <source src="robot-video.mov" type="video/quicktime">
+            <source src="robot-video.mov" type="video/mp4">
+          </video>
+          <div class="fig-caption">FIG 0.1 — SUPERNOVA PROTOTYPE FIELD TEST</div>
+        </div>
+      </div>
+    </section>
+    <section id="about">
+      <div class="section-header-row">
+        <div><div class="section-label">01 // TEAM OVERVIEW</div><h2>Building. Testing. Improving.</h2></div>
+        <div class="section-tag-right">TEAM ROSTER &amp; METRICS</div>
+      </div>
+      <p class="section-intro">Supernova is an FTC robotics team focused on combining mechanical design, programming, electronics, and teamwork to build a competitive robot and become better engineers along the way.</p>
+      <div class="stats">
+        <div class="stat"><div class="stat-number">37186</div><div class="stat-label">FTC Team Number</div></div>
+        <div class="stat"><div class="stat-number">∞</div><div class="stat-label">Ideas Tested</div></div>
+        <div class="stat"><div class="stat-number">1</div><div class="stat-label">Team Supernova</div></div>
+      </div>
+    </section>
+    <section id="robot">
+      <div class="section-header-row">
+        <div><div class="section-label">02 / MACHINE SCHEMATICS</div><h2>The Robot</h2></div>
+        <div class="section-tag-right">TIME-STREAM // SCROLL HORIZONTALLY →</div>
+      </div>
+      <div class="time-stream">
+        <div class="stream-card">
+          <div class="stream-badge-top">ITERATION 01</div>
+          <video autoplay loop muted playsinline poster="https://images.unsplash.com/photo-1535378917042-10a22c95931a?auto=format&fit=crop&w=1200&q=80">
+            <source src="robot-video.mov" type="video/quicktime">
+            <source src="robot-video.mov" type="video/mp4">
+          </video>
+          <div class="stream-overlay-bottom">
+            <div><div class="stream-sub">FIRST FUNCTIONAL BUILD</div><div class="stream-title">FIELD TEST // CHASSIS &amp; DRIVETRAIN</div></div>
+            <div class="stream-code">SYS-01 / LOOP</div>
+          </div>
+        </div>
+      </div>
+      <div class="engineering">
+        <div class="engineering-card"><h3>🛞 Drivetrain</h3><p>Our drivetrain provides the foundation for precise movement and reliable navigation around the field.</p></div>
+        <div class="engineering-card"><h3>⚙️ Mechanisms</h3><p>We design and iterate mechanisms with a focus on reliability, speed, accessibility, and ease of maintenance.</p></div>
+        <div class="engineering-card"><h3>💻 Software</h3><p>Our programming focuses on consistent autonomous routines, driver control, sensors, and repeatable robot behavior.</p></div>
+        <div class="engineering-card"><h3>🔌 Electronics</h3><p>Clean wiring and organized electronics help us troubleshoot quickly and keep the robot competition-ready.</p></div>
+      </div>
+    </section>
+    <section id="iterations">
+      <div class="section-header-row">
+        <div><div class="section-label">03 / ITERATION LOG</div><h2>Iteration Log</h2></div>
+        <div class="section-tag-right">INTAKE DEVELOPMENT</div>
+      </div>
+      <div class="iteration-layout">
+        <div class="fig-grid">
+          <div class="taped-card"><img src="fig-a-wheels.jpg" alt="Vectored wheel pair" onerror="this.src='https://placehold.co/600x450/1e293b/f8fafc?text=Upload+fig-a-wheels.jpg';"><div class="fig-caption">FIG. A — VECTORED WHEEL PAIR</div></div>
+          <div class="taped-card"><img src="fig-b-parts.jpg" alt="Wheel parts and roller set" onerror="this.src='https://placehold.co/600x450/1e293b/f8fafc?text=Upload+fig-b-parts.jpg';"><div class="fig-caption">FIG. B — WHEEL PARTS &amp; ROLLER SET</div></div>
+          <div class="taped-card"><img src="fig-c-floor1.jpg" alt="Build floor CAD review 1" onerror="this.src='https://placehold.co/600x450/1e293b/f8fafc?text=Upload+fig-c-floor1.jpg';"><div class="fig-caption">FIG. C — BUILD FLOOR CAD CHECK</div></div>
+          <div class="taped-card"><img src="fig-d-floor2.jpg" alt="Build floor CAD review 2" onerror="this.src='https://placehold.co/600x450/1e293b/f8fafc?text=Upload+fig-d-floor2.jpg';"><div class="fig-caption">FIG. D — FITMENT &amp; FIELD TESTING</div></div>
+          <div class="taped-card"><img src="fig-e-chassis.jpg" alt="Onshape chassis assembly" onerror="this.src='https://placehold.co/600x450/1e293b/f8fafc?text=Upload+fig-e-chassis.jpg';"><div class="fig-caption">FIG. E — ONSHAPE CHASSIS ASSEMBLY</div></div>
+          <div class="taped-card"><img src="fig-f-turret.jpg" alt="Turret base plate CAD" onerror="this.src='https://placehold.co/600x450/1e293b/f8fafc?text=Upload+fig-f-turret.jpg';"><div class="fig-caption">FIG. F — TURRET BASE PLATE</div></div>
+        </div>
+        <aside class="log-notes-box">
+          <h3>Vectored Wheel Intake</h3>
+          <p>In this iteration we moved the intake rollers over to vectored wheels, so the angled rollers pull game pieces in more smoothly and keep them from getting stuck or misaligned at the mouth of the intake. Fig. A shows the printed pair; Fig. B shows the parts that make up each wheel — the hub and the individual rollers that press into its circumference.</p>
+          <p>The wheels came out slightly too large to seat cleanly inside the intake design, so the fitment is being adjusted before the assembly goes back onto the robot.</p>
+          <p>Figs. C through F are the CAD side of the same iteration — modeling and reviewing the chassis assembly and turret base plate in Onshape, then checking the printed parts against the model on the build floor.</p>
+          <table class="spec-table">
+            <tr><td>Iteration</td><td>IT-02</td></tr>
+            <tr><td>Subsystem</td><td>Intake</td></tr>
+            <tr><td>Part</td><td>Vectored guide wheels</td></tr>
+            <tr><td>Process</td><td>FDM / PLA</td></tr>
+            <tr><td>Status</td><td>In fitment</td></tr>
+          </table>
+          <div class="next-step-callout">
+            <div class="next-step-label">NEXT STEP</div>
+            <p>Resize the wheel diameter against the intake envelope, reprint, and re-test the assembly on the robot.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+    <section id="code">
+      <div class="section-header-row">
+        <div><div class="section-label">04 / SOFTWARE LAYER</div><h2>The Code</h2></div>
+        <div class="section-tag-right">JAVA // OPENCV // FTC SDK</div>
+      </div>
+      <div class="code-section-grid">
+        <div>
+          <div class="control-stack-label">CONTROL STACK</div>
+          <div class="stack-item"><div class="stack-num">01</div><div><div class="stack-top"><span class="stack-title">AUTONOMOUS</span><span class="stack-tech">OpenCV + AprilTags</span></div><p class="stack-desc">Vision-based localization and scoring during the 30s auto phase.</p></div></div>
+          <div class="stack-item"><div class="stack-num">02</div><div><div class="stack-top"><span class="stack-title">TELE-OP</span><span class="stack-tech">Java / FTC SDK</span></div><p class="stack-desc">Driver-controlled state machine with closed-loop PID on all actuators.</p></div></div>
+          <div class="stack-item"><div class="stack-num">03</div><div><div class="stack-top"><span class="stack-title">PERCEPTION</span><span class="stack-tech">ONNX Runtime</span></div><p class="stack-desc">On-device inference for specimen classification and target lock.</p></div></div>
+          <div class="stack-item"><div class="stack-num">04</div><div><div class="stack-top"><span class="stack-title">TELEMETRY</span><span class="stack-tech">FTC Dashboard</span></div><p class="stack-desc">Live tuning of gains, paths, and sensor offsets from the pit.</p></div></div>
+        </div>
+        <div class="ide-window">
+          <div class="ide-topbar">
+            <div class="ide-dots-title"><div class="ide-dots"><span></span><span></span><span></span></div><span id="ide-filename">SUPERNOVA.ROBOT / AUTO.JAVA</span></div>
+            <div class="ide-tabs">
+              <button class="ide-tab-btn active" onclick="switchCodeTab('auto', this)">AUTONOMOUS</button>
 TELE-OP
 VISION
+
+
 
 // AUTO_PHASE.specimen_cycle()
 public void runOpMode() {
@@ -963,57 +278,39 @@ double err = aprilTag.center.x - frame.cx;
 drive.aim(err * GAIN);  // proportional aim
 if (abs(err) < TOL) state = SCORE;
 }
-UTF-8 // JAVA
-● COMPILED // 0 ERRORS
-LN 12
 
+UTF-8 // JAVA● COMPILED // 0 ERRORSLN 12
 
-05 // DESIGN PROCESS & BUILD LOG
-How We Build & Season Progress
-
+05 // DESIGN PROCESS & BUILD LOGHow We Build & Season Progress
 ITERATIVE METHODOLOGY
-💡
-Ideation
-We brainstorm multiple solutions before committing to a design.
-🧪
-Prototype
-We quickly build and test concepts to discover what works in the real world.
-🔧
-Iteration
-Every test gives us data that helps improve our next version.
-📊
-Evaluate
-We compare designs based on reliability, performance, complexity, and repeatability.
-🏆
-Compete
-Our final goal is a robot that performs consistently under competition conditions.
-🚀
-Improve
-We keep learning throughout the season and carry those lessons into our next design.
-LOG 01 // PHASE 01
-Concept & Research
-Research the game, identify priorities, and develop initial robot concepts.
-LOG 02 // PHASE 02
-Prototype
-Build early mechanisms and drivetrain prototypes to validate our ideas.
-LOG 03 // PHASE 03
-Testing & Iteration
-Test repeatedly, find weaknesses, and improve our robot's reliability.
-LOG 04 // PHASE 04
-Competition Ready
-Finalize our systems, practice our strategy, and prepare for competition.
+
+
+💡IdeationWe brainstorm multiple solutions before committing to a design.
+🧪PrototypeWe quickly build and test concepts to discover what works in the real world.
+🔧IterationEvery test gives us data that helps improve our next version.
+📊EvaluateWe compare designs based on reliability, performance, complexity, and repeatability.
+🏆CompeteOur final goal is a robot that performs consistently under competition conditions.
+🚀ImproveWe keep learning throughout the season and carry those lessons into our next design.
+
+
+LOG 01 // PHASE 01Concept & ResearchResearch the game, identify priorities, and develop initial robot concepts.
+LOG 02 // PHASE 02PrototypeBuild early mechanisms and drivetrain prototypes to validate our ideas.
+LOG 03 // PHASE 03Testing & IterationTest repeatedly, find weaknesses, and improve our robot's reliability.
+LOG 04 // PHASE 04Competition ReadyFinalize our systems, practice our strategy, and prepare for competition.
+
+
 FTC TEAM 37186 — SUPERNOVA // ENGINEERING NOTEBOOK
 ↑ BACK TO TOP
+
+
+
+
 function switchCodeTab(tabName, btn) {
 document.querySelectorAll('.ide-tab-btn').forEach(b => b.classList.remove('active'));
 document.querySelectorAll('.code-panel').forEach(p => p.classList.remove('active'));
 btn.classList.add('active');
 document.getElementById('panel-' + tabName).classList.add('active');
-const meta = {
-auto: { file: 'SUPERNOVA.ROBOT / AUTO.JAVA', lines: 'LN 12' },
-teleop: { file: 'SUPERNOVA.ROBOT / TELEOP.JAVA', lines: 'LN 7' },
-vision: { file: 'SUPERNOVA.ROBOT / VISION.JAVA', lines: 'LN 7' }
-};
+const meta = { auto: { file: 'SUPERNOVA.ROBOT / AUTO.JAVA', lines: 'LN 12' }, teleop: { file: 'SUPERNOVA.ROBOT / TELEOP.JAVA', lines: 'LN 7' }, vision: { file: 'SUPERNOVA.ROBOT / VISION.JAVA', lines: 'LN 7' } };
 document.getElementById('ide-filename').textContent = meta[tabName].file;
 document.getElementById('ide-lines').textContent = meta[tabName].lines;
 }
