@@ -5,312 +5,236 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FTC 37186 | Supernova Engineering Notebook</title>
 <style>
-:root{--desk-bg:#1e222b;--paper:#fcfaf2;--paper-alt:#f3efe2;--grid-line:rgba(36,99,168,.1);--grid-bold:rgba(36,99,168,.2);--margin-red:rgba(217,70,70,.45);--ink:#181c26;--ink-muted:#525b6e;--orange:#e85d04;--blue:#1d6fa5;--blue-soft:rgba(29,111,165,.1);--tape:rgba(255,243,176,.78);--border:rgba(24,28,38,.15);--shadow:0 20px 50px rgba(0,0,0,.35);--code-bg:#0f1624}
-body.blueprint-mode{--desk-bg:#06090f;--paper:#0c1424;--paper-alt:#111d33;--grid-line:rgba(0,191,255,.08);--grid-bold:rgba(0,191,255,.17);--margin-red:rgba(255,107,0,.45);--ink:#f0f6fc;--ink-muted:#93a8c4;--orange:#ff7b1a;--blue:#38bdf8;--blue-soft:rgba(56,189,248,.12);--tape:rgba(255,255,255,.18);--border:rgba(56,189,248,.22);--shadow:0 24px 60px rgba(0,0,0,.65);--code-bg:#080d17}
+:root{--bg:#1e222b;--paper:#fcfaf2;--alt:#f3efe2;--g1:rgba(36,99,168,.1);--g2:rgba(36,99,168,.2);--red:rgba(217,70,70,.45);--ink:#181c26;--mut:#525b6e;--org:#e85d04;--blu:#1d6fa5;--tape:rgba(255,243,176,.78);--bdr:rgba(24,28,38,.15);--code:#0f1624}
+body.bp{--bg:#06090f;--paper:#0c1424;--alt:#111d33;--g1:rgba(0,191,255,.08);--g2:rgba(0,191,255,.17);--red:rgba(255,107,0,.45);--ink:#f0f6fc;--mut:#93a8c4;--org:#ff7b1a;--blu:#38bdf8;--tape:rgba(255,255,255,.18);--bdr:rgba(56,189,248,.22);--code:#080d17}
 *{box-sizing:border-box;scroll-behavior:smooth}
-body{margin:0;padding:28px 16px 64px;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background-color:var(--desk-bg);background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1px);background-size:20px 20px;color:var(--ink);line-height:1.65;transition:background-color .25s ease,color .25s ease}
-.notebook-wrapper{max-width:1180px;margin:0 auto;position:relative}
-.notebook-tabs{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:0 20px 0 64px}
-.tab-group{display:flex;flex-wrap:wrap;gap:6px}
-.tab{display:inline-block;padding:10px 15px;background:var(--paper-alt);color:var(--ink);text-decoration:none;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:.78rem;font-weight:800;border-radius:10px 10px 0 0;border:1px solid var(--border);border-bottom:none;transition:transform .15s ease,background .15s ease}
-.tab:hover{transform:translateY(-3px);background:var(--paper);color:var(--orange)}
-.tab.active-tab{background:var(--paper);border-top:3px solid var(--orange)}
-.mode-toggle{cursor:pointer;padding:8px 14px;margin-bottom:6px;border-radius:6px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#f8fafc;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.76rem;font-weight:700}
-.mode-toggle:hover{background:rgba(255,255,255,.16)}
-.notebook-page{position:relative;background-color:var(--paper);background-image:linear-gradient(to right,var(--grid-bold) 1px,transparent 1px),linear-gradient(to bottom,var(--grid-bold) 1px,transparent 1px),linear-gradient(to right,var(--grid-line) 1px,transparent 1px),linear-gradient(to bottom,var(--grid-line) 1px,transparent 1px);background-size:100px 100px,100px 100px,20px 20px,20px 20px;border-radius:6px 18px 18px 6px;box-shadow:var(--shadow);padding:44px 48px 56px 84px;border:1px solid var(--border);overflow:hidden}
-.notebook-page::before{content:"";position:absolute;top:0;bottom:0;left:56px;width:2px;background:var(--margin-red)}
-.spiral-binding{position:absolute;top:24px;bottom:24px;left:10px;width:28px;background-image:radial-gradient(circle at 14px 18px,var(--desk-bg) 6px,transparent 7px),linear-gradient(to right,#94a3b8,#cbd5e1,#64748b);background-size:28px 36px,14px 36px;background-repeat:repeat-y;background-position:0 0,0 15px;pointer-events:none;opacity:.85}
-.notebook-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding-bottom:14px;margin-bottom:36px;border-bottom:2px solid var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:.8rem}
-.stamp-box{border:2px solid var(--orange);color:var(--orange);padding:4px 10px;font-weight:900;letter-spacing:1px;text-transform:uppercase;transform:rotate(-1.5deg)}
-section{padding:52px 0;border-bottom:1.5px dashed var(--border)}
-section:first-of-type{padding-top:10px}
-section:last-of-type{border-bottom:none;padding-bottom:16px}
-.section-header-row{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;margin-bottom:24px}
-.section-label{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--blue);font-size:.8rem;font-weight:900;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:4px}
-.section-tag-right{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.76rem;font-weight:700;color:var(--ink-muted);letter-spacing:.8px;text-transform:uppercase}
-h1{font-size:clamp(2.8rem,6vw,4.8rem);line-height:.95;letter-spacing:-2.5px;margin:10px 0 18px}
-h1 span{display:block;color:var(--orange);text-decoration:underline;text-decoration-style:wavy;text-decoration-thickness:3px;text-underline-offset:8px}
-h2{margin:0;font-size:clamp(1.85rem,4vw,2.7rem);letter-spacing:-1.2px;text-transform:uppercase}
-.section-intro{max-width:680px;color:var(--ink-muted);margin:10px 0 28px}
-.hero{display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:42px}
-.eyebrow{display:inline-block;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.78rem;font-weight:800;color:var(--blue);background:var(--blue-soft);padding:5px 10px;border-radius:4px}
-.hero-text{color:var(--ink-muted);font-size:1.05rem;margin-bottom:24px}
-.hero-buttons{display:flex;flex-wrap:wrap;gap:12px}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:6px;text-decoration:none;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-weight:800;font-size:.85rem;transition:transform .15s ease}
-.btn:hover{transform:translateY(-2px)}
-.btn-primary{background:var(--orange);color:#fff;box-shadow:3px 3px 0 var(--ink)}
-.btn-secondary{background:var(--paper-alt);color:var(--ink);border:1.5px solid var(--ink);box-shadow:3px 3px 0 var(--ink)}
-.taped-card{position:relative;background:#fff;padding:10px 10px 14px;border:1px solid rgba(0,0,0,.16);box-shadow:0 10px 24px rgba(0,0,0,.14)}
-body.blueprint-mode .taped-card{background:#132038;border-color:var(--border)}
-.taped-card::before{content:"";position:absolute;top:-11px;left:50%;transform:translateX(-50%) rotate(-1.5deg);width:96px;height:22px;background:var(--tape);border-left:1px dashed rgba(0,0,0,.12);border-right:1px dashed rgba(0,0,0,.12);box-shadow:0 2px 4px rgba(0,0,0,.08);z-index:2}
-.taped-card img,.taped-card video{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:#0f172a}
-.fig-caption{margin-top:9px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.72rem;font-weight:700;color:var(--ink-muted);letter-spacing:.4px;text-transform:uppercase}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.stat{padding:20px;background:var(--paper-alt);border:1.5px solid var(--border);border-top:4px solid var(--blue);border-radius:4px}
-.stat-number{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:2rem;font-weight:900;color:var(--orange)}
-.stat-label{font-size:.88rem;font-weight:700;color:var(--ink-muted)}
-.time-stream{display:flex;gap:22px;overflow-x:auto;padding:14px 4px 20px;scroll-snap-type:x mandatory}
-.stream-card{min-width:100%;scroll-snap-align:start;position:relative;border:2px solid var(--ink);border-radius:8px;overflow:hidden;background:#0c111d;box-shadow:6px 6px 0 var(--ink)}
-.stream-card video,.stream-card img{display:block;width:100%;max-height:460px;object-fit:cover}
-.stream-badge-top{position:absolute;top:16px;left:16px;background:rgba(15,23,42,.82);color:#f8fafc;border:1px solid rgba(255,255,255,.25);padding:5px 10px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.74rem;font-weight:800;letter-spacing:.8px}
-.stream-overlay-bottom{position:absolute;left:0;right:0;bottom:0;padding:28px 20px 16px;background:linear-gradient(to top,rgba(8,12,20,.92),transparent);display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:10px;color:#fff}
-.stream-sub{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.72rem;color:#38bdf8;font-weight:800;letter-spacing:.8px}
-.stream-title{font-size:1.2rem;font-weight:900;letter-spacing:-.3px}
-.stream-code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.74rem;color:#cbd5e1}
-.engineering{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:28px}
-.engineering-card{padding:22px;background:var(--paper-alt);border:1.5px solid var(--border);border-radius:6px}
-.engineering-card h3{margin:0 0 6px;font-size:1.1rem}
-.engineering-card p{margin:0;color:var(--ink-muted);font-size:.92rem}
-.iteration-layout{display:grid;grid-template-columns:1.35fr .85fr;gap:28px;align-items:start}
-.fig-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
-.log-notes-box{background:var(--paper-alt);border:1.5px solid var(--ink);border-radius:6px;padding:24px;box-shadow:5px 5px 0 var(--ink)}
-.log-notes-box h3{margin:0 0 12px;font-size:1.35rem;letter-spacing:-.5px;text-transform:uppercase}
-.log-notes-box p{margin:0 0 14px;font-size:.93rem;color:var(--ink-muted)}
-.spec-table{width:100%;border-collapse:collapse;margin:18px 0;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.78rem}
-.spec-table td{padding:9px 4px;border-bottom:1px solid var(--border)}
-.spec-table td:first-child{color:var(--ink-muted);font-weight:700;text-transform:uppercase}
-.spec-table td:last-child{text-align:right;font-weight:800;color:var(--ink)}
-.next-step-callout{margin-top:16px;padding-left:14px;border-left:3px solid var(--blue)}
-.next-step-label{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.74rem;font-weight:900;color:var(--blue);letter-spacing:.8px;margin-bottom:4px}
-.next-step-callout p{margin:0;font-size:.9rem;color:var(--ink)}
-.code-section-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:28px;align-items:start}
-Use code with caution.
-.control-stack-label{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.76rem;font-weight:800;color:var(--ink-muted);letter-spacing:1px;margin-bottom:14px}
-.stack-item{display:grid;grid-template-columns:32px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid var(--border)}
-.stack-item:last-child{border-bottom:none}
-.stack-num{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.8rem;font-weight:900;color:var(--blue);padding-top:2px}
-.stack-top{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:4px}
-.stack-title{font-weight:900;font-size:.98rem;letter-spacing:.3px}
-.stack-tech{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.74rem;font-weight:700;color:var(--blue)}
-.stack-desc{margin:0;font-size:.88rem;color:var(--ink-muted)}
-.ide-window{background:var(--code-bg);color:#e2e8f0;border-radius:10px;border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);overflow:hidden}
-.ide-topbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding:12px 16px;background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.1)}
-.ide-dots-title{display:flex;align-items:center;gap:10px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.74rem;color:#94a3b8}
-.ide-dots{display:flex;gap:6px}
-.ide-dots span{width:9px;height:9px;border-radius:50%;background:#475569}
-.ide-dots span:first-child{background:#3b82f6}
-.ide-tabs{display:flex;gap:6px}
-.ide-tab-btn{cursor:pointer;border:none;padding:5px 10px;border-radius:4px;background:transparent;color:#94a3b8;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.72rem;font-weight:800}
-.ide-tab-btn.active{background:#3b82f6;color:#fff}
-.ide-body{padding:20px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.82rem;line-height:1.65;overflow-x:auto;min-height:225px}
-.code-panel{display:none;margin:0;white-space:pre}
-.code-panel.active{display:block}
-.c-comment{color:#64748b}.c-keyword{color:#60a5fa;font-weight:700}.c-method{color:#f8fafc}.c-const{color:#fb923c}
-.ide-footer{display:flex;justify-content:space-between;align-items:center;padding:9px 16px;background:rgba(255,255,255,.03);border-top:1px solid rgba(255,255,255,.1);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.7rem;color:#64748b}
-.status-compiled{color:#60a5fa;font-weight:700}
-.projects{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.project{padding:20px;background:var(--paper-alt);border:1.5px solid var(--border);border-radius:6px}
-.project-icon{font-size:1.5rem;margin-bottom:8px}
-.project h3{margin:0 0 6px;font-size:1.05rem}
-.project p{margin:0;font-size:.9rem;color:var(--ink-muted)}
-.timeline{margin-top:24px;padding-left:24px;border-left:2px solid var(--orange)}
-.timeline-item{position:relative;padding:0 0 26px 18px}
-.timeline-item::before{content:"✓";position:absolute;left:-34px;top:0;width:20px;height:20px;border-radius:50%;background:var(--orange);color:#fff;font-size:.72rem;font-weight:900;display:flex;align-items:center;justify-content:center}
-.timeline-date{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--blue);font-size:.78rem;font-weight:800}
-.timeline h3{margin:4px 0}
-.timeline p{margin:0;color:var(--ink-muted)}
-footer{margin-top:24px;padding-top:20px;border-top:2px solid var(--ink);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.8rem;color:var(--ink-muted)}
-@media (max-width:920px){.hero,.iteration-layout,.code-section-grid,.engineering,.projects,.stats{grid-template-columns:1fr}}
-@media (max-width:650px){.notebook-page{padding:28px 20px 36px 40px}.notebook-page::before{left:26px}.spiral-binding{display:none}.notebook-tabs{padding-left:8px}.fig-grid{grid-template-columns:1fr}}
-
-
----
-
-### PART 2 (Bottom Half — Copy & Paste Directly Below Part 1)
-
-```html
+body{margin:0;padding:24px 14px 60px;font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+.wrap{max-width:1150px;margin:auto}
+.tabs{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:0 16px 0 60px}
+.tab-g{display:flex;flex-wrap:wrap;gap:5px}
+.tab{padding:9px 14px;background:var(--alt);color:var(--ink);text-decoration:none;font-family:monospace;font-size:.78rem;font-weight:800;border-radius:8px 8px 0 0;border:1px solid var(--bdr);border-bottom:none}
+.tab.act{background:var(--paper);border-top:3px solid var(--org)}
+.tgl{cursor:pointer;padding:7px 12px;margin-bottom:5px;border-radius:6px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.1);color:#fff;font-family:monospace;font-size:.75rem;font-weight:700}
+.page{position:relative;background-color:var(--paper);background-image:linear-gradient(to right,var(--g2) 1px,transparent 1px),linear-gradient(to bottom,var(--g2) 1px,transparent 1px),linear-gradient(to right,var(--g1) 1px,transparent 1px),linear-gradient(to bottom,var(--g1) 1px,transparent 1px);background-size:100px 100px,100px 100px,20px 20px,20px 20px;border-radius:6px 16px 16px 6px;box-shadow:0 20px 50px rgba(0,0,0,.4);padding:40px 44px 52px 80px;border:1px solid var(--bdr);overflow:hidden}
+.page::before{content:"";position:absolute;top:0;bottom:0;left:54px;width:2px;background:var(--red)}
+.rings{position:absolute;top:20px;bottom:20px;left:10px;width:26px;background-image:radial-gradient(circle at 13px 18px,var(--bg) 6px,transparent 7px),linear-gradient(to right,#94a3b8,#cbd5e1,#64748b);background-size:26px 36px,13px 36px;background-repeat:repeat-y;pointer-events:none}
+.hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding-bottom:12px;margin-bottom:32px;border-bottom:2px solid var(--ink);font-family:monospace;font-size:.8rem}
+.stamp{border:2px solid var(--org);color:var(--org);padding:3px 9px;font-weight:900;transform:rotate(-1.5deg)}
+section{padding:46px 0;border-bottom:1.5px dashed var(--bdr)}
+section:first-of-type{padding-top:6px}section:last-of-type{border-bottom:none}
+.srow{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:10px;margin-bottom:20px}
+.slbl{font-family:monospace;color:var(--blu);font-size:.78rem;font-weight:900;letter-spacing:1px}
+.stag{font-family:monospace;font-size:.74rem;font-weight:700;color:var(--mut)}
+h1{font-size:clamp(2.6rem,6vw,4.5rem);line-height:.95;letter-spacing:-2px;margin:10px 0 16px}
+h1 span{display:block;color:var(--org);text-decoration:underline wavy 3px;text-underline-offset:7px}
+h2{margin:0;font-size:clamp(1.7rem,4vw,2.5rem);letter-spacing:-1px;text-transform:uppercase}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:36px}
+.eye{display:inline-block;font-family:monospace;font-size:.76rem;font-weight:800;color:var(--blu);background:rgba(29,111,165,.1);padding:4px 9px;border-radius:4px}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.btn{padding:10px 16px;border-radius:6px;text-decoration:none;font-family:monospace;font-weight:800;font-size:.82rem}
+.bp-btn{background:var(--org);color:#fff;box-shadow:3px 3px 0 var(--ink)}
+.bs-btn{background:var(--alt);color:var(--ink);border:1.5px solid var(--ink);box-shadow:3px 3px 0 var(--ink)}
+.taped{position:relative;background:#fff;padding:10px 10px 12px;border:1px solid rgba(0,0,0,.15);box-shadow:0 8px 20px rgba(0,0,0,.14)}
+body.bp .taped{background:#132038;border-color:var(--bdr)}
+.taped::before{content:"";position:absolute;top:-10px;left:50%;transform:translateX(-50%) rotate(-1.5deg);width:90px;height:20px;background:var(--tape)}
+.taped img,.taped video{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:#0f172a}
+.cap{margin-top:8px;font-family:monospace;font-size:.7rem;font-weight:700;color:var(--mut)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.card{padding:18px;background:var(--alt);border:1.5px solid var(--bdr);border-radius:6px}
+.snum{font-family:monospace;font-size:1.9rem;font-weight:900;color:var(--org)}
+.stream{position:relative;border:2px solid var(--ink);border-radius:8px;overflow:hidden;background:#0c111d;box-shadow:5px 5px 0 var(--ink);margin-bottom:24px}
+.stream video{display:block;width:100%;max-height:440px;object-fit:cover}
+.sbadge{position:absolute;top:14px;left:14px;background:rgba(15,23,42,.85);color:#fff;border:1px solid rgba(255,255,255,.25);padding:4px 9px;font-family:monospace;font-size:.72rem;font-weight:800}
+.sover{position:absolute;left:0;right:0;bottom:0;padding:24px 18px 14px;background:linear-gradient(to top,rgba(8,12,20,.92),transparent);display:flex;justify-content:space-between;align-items:flex-end;color:#fff}
+.it-lay{display:grid;grid-template-columns:1.3fr .9fr;gap:24px;align-items:start}
+.notes{background:var(--alt);border:1.5px solid var(--ink);border-radius:6px;padding:22px;box-shadow:5px 5px 0 var(--ink)}
+.notes h3{margin:0 0 10px;text-transform:uppercase}.notes p{font-size:.9rem;color:var(--mut);margin:0 0 12px}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-family:monospace;font-size:.76rem}
+td{padding:8px 4px;border-bottom:1px solid var(--bdr)}td:first-child{color:var(--mut);font-weight:700;text-transform:uppercase}td:last-child{text-align:right;font-weight:800}
+.next{margin-top:14px;padding-left:12px;border-left:3px solid var(--blu);font-size:.88rem}
+.cgrid{display:grid;grid-template-columns:.9fr 1.1fr;gap:24px;align-items:start}
+.sitem{display:grid;grid-template-columns:28px 1fr;gap:10px;padding:12px 0;border-bottom:1px solid var(--bdr)}
+.ide{background:var(--code);color:#e2e8f0;border-radius:8px;border:2px solid var(--ink);box-shadow:5px 5px 0 var(--ink);overflow:hidden}
+.itop{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding:10px 14px;background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.1);font-family:monospace;font-size:.72rem}
+.itabs{display:flex;gap:5px}
+.ibtn{cursor:pointer;border:none;padding:4px 9px;border-radius:4px;background:transparent;color:#94a3b8;font-family:monospace;font-size:.7rem;font-weight:800}
+.ibtn.act{background:#3b82f6;color:#fff}
+.ibody{padding:18px;font-family:monospace;font-size:.8rem;line-height:1.6;overflow-x:auto;min-height:210px}
+.cpanel{display:none;margin:0;white-space:pre}.cpanel.act{display:block}
+.ifoot{display:flex;justify-content:space-between;padding:8px 14px;background:rgba(255,255,255,.03);border-top:1px solid rgba(255,255,255,.1);font-family:monospace;font-size:.68rem;color:#64748b}
+.tl{margin-top:22px;padding-left:22px;border-left:2px solid var(--org)}
+.tli{position:relative;padding:0 0 22px 16px}
+.tli::before{content:"✓";position:absolute;left:-32px;top:0;width:18px;height:18px;border-radius:50%;background:var(--org);color:#fff;font-size:.7rem;font-weight:900;display:flex;align-items:center;justify-content:center}
+footer{margin-top:20px;padding-top:16px;border-top:2px solid var(--ink);display:flex;justify-content:space-between;font-family:monospace;font-size:.78rem;color:var(--mut)}
+@media(max-width:880px){.hero,.it-lay,.cgrid,.grid2,.grid3{grid-template-columns:1fr}.page{padding:24px 18px 32px 36px}.page::before{left:22px}.rings{display:none}.tabs{padding-left:6px}}
+</style>
+</head>
 <body>
-<div class="notebook-wrapper" id="top">
-  <nav class="notebook-tabs">
-    <div class="tab-group">
-      <a href="#top" class="tab active-tab">00_COVER</a>
+<div class="wrap" id="top">
+  <nav class="tabs">
+    <div class="tab-g">
+      <a href="#top" class="tab act">00_COVER</a>
       <a href="#about" class="tab">01_TEAM</a>
       <a href="#robot" class="tab">02_ROBOT</a>
       <a href="#iterations" class="tab">03_ITERATIONS</a>
       <a href="#code" class="tab">04_CODE</a>
       <a href="#progress" class="tab">05_LOGBOOK</a>
     </div>
-    <button class="mode-toggle" onclick="document.body.classList.toggle('blueprint-mode')">📐 Toggle Blueprint / Lab Paper</button>
+    <button class="tgl" onclick="document.body.classList.toggle('bp')">📐 Toggle Blueprint / Lab Paper</button>
   </nav>
-  <main class="notebook-page">
-    <div class="spiral-binding" aria-hidden="true"></div>
-    <div class="notebook-header">
-      <div><strong>DOC ID:</strong> FTC-37186-NB &nbsp;|&nbsp; <strong>TEAM:</strong> SUPERNOVA</div>
-      <div class="stamp-box">ENGINEERING PORTFOLIO</div>
-    </div>
+  <main class="page">
+    <div class="rings"></div>
+    <div class="hdr"><div><strong>DOC ID:</strong> FTC-37186-NB | <strong>TEAM:</strong> SUPERNOVA</div><div class="stamp">ENGINEERING PORTFOLIO</div></div>
     <section>
       <div class="hero">
         <div>
-          <div class="eyebrow">🚀 FIRST TECH CHALLENGE // TEAM 37186</div>
+          <div class="eye">🚀 FIRST TECH CHALLENGE // TEAM 37186</div>
           <h1>WE ARE <span>SUPERNOVA.</span></h1>
-          <p class="hero-text">Official engineering notebook and build log of FTC Team 37186. Documenting our mechanical design, CAD iterations, software architecture, and field testing throughout the season.</p>
-          <div class="hero-buttons">
-            <a href="#robot" class="btn btn-primary">🤖 Machine Schematics</a>
-            <a href="#iterations" class="btn btn-secondary">📓 Iteration Log</a>
-            <a href="#code" class="btn btn-secondary">💻 Control Stack</a>
+          <p style="color:var(--mut)">Official engineering notebook and build log of FTC Team 37186. Documenting our mechanical design, CAD iterations, software architecture, and field testing throughout the season.</p>
+          <div class="btns">
+            <a href="#robot" class="btn bp-btn">🤖 Machine Schematics</a>
+            <a href="#iterations" class="btn bs-btn">📓 Iteration Log</a>
+            <a href="#code" class="btn bs-btn">💻 Control Stack</a>
           </div>
         </div>
-        <div class="taped-card">
-          <video autoplay loop muted playsinline poster="https://images.unsplash.com/photo-1535378917042-10a22c95931a?auto=format&fit=crop&w=1200&q=80">
-            <source src="robot-video.mov" type="video/quicktime">
-            <source src="robot-video.mov" type="video/mp4">
-          </video>
-          <div class="fig-caption">FIG 0.1 — SUPERNOVA PROTOTYPE FIELD TEST</div>
+        <div class="taped">
+          <video autoplay loop muted playsinline poster="https://unsplash.com"><source src="robot-video.mov" type="video/quicktime"><source src="robot-video.mov" type="video/mp4"></video>
+          <div class="cap">FIG 0.1 — SUPERNOVA PROTOTYPE FIELD TEST</div>
         </div>
       </div>
     </section>
     <section id="about">
-      <div class="section-header-row">
-        <div><div class="section-label">01 // TEAM OVERVIEW</div><h2>Building. Testing. Improving.</h2></div>
-        <div class="section-tag-right">TEAM ROSTER &amp; METRICS</div>
-      </div>
-      <p class="section-intro">Supernova is an FTC robotics team focused on combining mechanical design, programming, electronics, and teamwork to build a competitive robot and become better engineers along the way.</p>
-      <div class="stats">
-        <div class="stat"><div class="stat-number">37186</div><div class="stat-label">FTC Team Number</div></div>
-        <div class="stat"><div class="stat-number">∞</div><div class="stat-label">Ideas Tested</div></div>
-        <div class="stat"><div class="stat-number">1</div><div class="stat-label">Team Supernova</div></div>
+      <div class="srow"><div><div class="slbl">01 // TEAM OVERVIEW</div><h2>Building. Testing. Improving.</h2></div><div class="stag">TEAM ROSTER &amp; METRICS</div></div>
+      <p style="color:var(--mut);max-width:680px">Supernova is an FTC robotics team focused on combining mechanical design, programming, electronics, and teamwork to build a competitive robot and become better engineers along the way.</p>
+      <div class="grid3">
+        <div class="card"><div class="snum">37186</div><div style="font-weight:700;color:var(--mut)">FTC Team Number</div></div>
+        <div class="card"><div class="snum">∞</div><div style="font-weight:700;color:var(--mut)">Ideas Tested</div></div>
+        <div class="card"><div class="snum">1</div><div style="font-weight:700;color:var(--mut)">Team Supernova</div></div>
       </div>
     </section>
     <section id="robot">
-      <div class="section-header-row">
-        <div><div class="section-label">02 / MACHINE SCHEMATICS</div><h2>The Robot</h2></div>
-        <div class="section-tag-right">TIME-STREAM // SCROLL HORIZONTALLY →</div>
+      <div class="srow"><div><div class="slbl">02 / MACHINE SCHEMATICS</div><h2>The Robot</h2></div><div class="stag">TIME-STREAM // SCROLL HORIZONTALLY →</div></div>
+      <div class="stream">
+        <div class="sbadge">ITERATION 01</div>
+        <video autoplay loop muted playsinline poster="https://unsplash.com"><source src="robot-video.mov" type="video/quicktime"><source src="robot-video.mov" type="video/mp4"></video>
+        <div class="sover"><div><div style="font-family:monospace;font-size:.72rem;color:#38bdf8;font-weight:800">FIRST FUNCTIONAL BUILD</div><div style="font-size:1.15rem;font-weight:900">FIELD TEST // CHASSIS &amp; DRIVETRAIN</div></div><div style="font-family:monospace;font-size:.74rem">SYS-01 / LOOP</div></div>
       </div>
-      <div class="time-stream">
-        <div class="stream-card">
-          <div class="stream-badge-top">ITERATION 01</div>
-          <video autoplay loop muted playsinline poster="https://images.unsplash.com/photo-1535378917042-10a22c95931a?auto=format&fit=crop&w=1200&q=80">
-            <source src="robot-video.mov" type="video/quicktime">
-            <source src="robot-video.mov" type="video/mp4">
-          </video>
-          <div class="stream-overlay-bottom">
-            <div><div class="stream-sub">FIRST FUNCTIONAL BUILD</div><div class="stream-title">FIELD TEST // CHASSIS &amp; DRIVETRAIN</div></div>
-            <div class="stream-code">SYS-01 / LOOP</div>
-          </div>
-        </div>
-      </div>
-      <div class="engineering">
-        <div class="engineering-card"><h3>🛞 Drivetrain</h3><p>Our drivetrain provides the foundation for precise movement and reliable navigation around the field.</p></div>
-        <div class="engineering-card"><h3>⚙️ Mechanisms</h3><p>We design and iterate mechanisms with a focus on reliability, speed, accessibility, and ease of maintenance.</p></div>
-        <div class="engineering-card"><h3>💻 Software</h3><p>Our programming focuses on consistent autonomous routines, driver control, sensors, and repeatable robot behavior.</p></div>
-        <div class="engineering-card"><h3>🔌 Electronics</h3><p>Clean wiring and organized electronics help us troubleshoot quickly and keep the robot competition-ready.</p></div>
+      <div class="grid2">
+        <div class="card"><h3>🛞 Drivetrain</h3><p style="color:var(--mut);margin:0">Our drivetrain provides the foundation for precise movement and reliable navigation around the field.</p></div>
+        <div class="card"><h3>⚙️ Mechanisms</h3><p style="color:var(--mut);margin:0">We design and iterate mechanisms with a focus on reliability, speed, accessibility, and ease of maintenance.</p></div>
+        <div class="card"><h3>💻 Software</h3><p style="color:var(--mut);margin:0">Our programming focuses on consistent autonomous routines, driver control, sensors, and repeatable robot behavior.</p></div>
+        <div class="card"><h3>🔌 Electronics</h3><p style="color:var(--mut);margin:0">Clean wiring and organized electronics help us troubleshoot quickly and keep the robot competition-ready.</p></div>
       </div>
     </section>
     <section id="iterations">
-      <div class="section-header-row">
-        <div><div class="section-label">03 / ITERATION LOG</div><h2>Iteration Log</h2></div>
-        <div class="section-tag-right">INTAKE DEVELOPMENT</div>
-      </div>
-      <div class="iteration-layout">
-        <div class="fig-grid">
-          <div class="taped-card"><img src="fig-a-wheels.jpg" alt="Vectored wheel pair" onerror="this.src='https://placehold.co/600x450/1e293b/f8fafc?text=Upload+fig-a-wheels.jpg';"><div class="fig-caption">FIG. A — VECTORED WHEEL PAIR</div></div>
-          <div class="taped-card"><img src="fig-b-parts.jpg" alt="Wheel parts and roller set" onerror="this.src='https://placehold.co/600x450/1e293b/f8fafc?text=Upload+fig-b-parts.jpg';"><div class="fig-caption">FIG. B — WHEEL PARTS &amp; ROLLER SET</div></div>
-          <div class="taped-card"><img src="fig-c-floor1.jpg" alt="Build floor CAD review 1" onerror="this.src='https://placehold.co/600x450/1e293b/f8fafc?text=Upload+fig-c-floor1.jpg';"><div class="fig-caption">FIG. C — BUILD FLOOR CAD CHECK</div></div>
-          <div class="taped-card"><img src="fig-d-floor2.jpg" alt="Build floor CAD review 2" onerror="this.src='https://placehold.co/600x450/1e293b/f8fafc?text=Upload+fig-d-floor2.jpg';"><div class="fig-caption">FIG. D — FITMENT &amp; FIELD TESTING</div></div>
-          <div class="taped-card"><img src="fig-e-chassis.jpg" alt="Onshape chassis assembly" onerror="this.src='https://placehold.co/600x450/1e293b/f8fafc?text=Upload+fig-e-chassis.jpg';"><div class="fig-caption">FIG. E — ONSHAPE CHASSIS ASSEMBLY</div></div>
-          <div class="taped-card"><img src="fig-f-turret.jpg" alt="Turret base plate CAD" onerror="this.src='https://placehold.co/600x450/1e293b/f8fafc?text=Upload+fig-f-turret.jpg';"><div class="fig-caption">FIG. F — TURRET BASE PLATE</div></div>
+      <div class="srow"><div><div class="slbl">03 / ITERATION LOG</div><h2>Iteration Log</h2></div><div class="stag">INTAKE DEVELOPMENT</div></div>
+      <div class="it-lay">
+        <div class="grid2">
+          <div class="taped"><img src="fig-a-wheels.jpg" onerror="this.src='https://placehold.co'"><div class="cap">FIG. A — VECTORED WHEEL PAIR</div></div>
+          <div class="taped"><img src="fig-b-parts.jpg" onerror="this.src='https://placehold.co'"><div class="cap">FIG. B — WHEEL PARTS &amp; ROLLER SET</div></div>
+          <div class="taped"><img src="fig-c-floor1.jpg" onerror="this.src='https://placehold.co'"><div class="cap">FIG. C — BUILD FLOOR CAD CHECK</div></div>
+          <div class="taped"><img src="fig-d-floor2.jpg" onerror="this.src='https://placehold.co'"><div class="cap">FIG. D — FITMENT &amp; FIELD TESTING</div></div>
+          <div class="taped"><img src="fig-e-chassis.jpg" onerror="this.src='https://placehold.co'"><div class="cap">FIG. E — ONSHAPE CHASSIS ASSEMBLY</div></div>
+          <div class="taped"><img src="fig-f-turret.jpg" onerror="this.src='https://placehold.co'"><div class="cap">FIG. F — TURRET BASE PLATE</div></div>
         </div>
-        <aside class="log-notes-box">
+        <aside class="notes">
           <h3>Vectored Wheel Intake</h3>
           <p>In this iteration we moved the intake rollers over to vectored wheels, so the angled rollers pull game pieces in more smoothly and keep them from getting stuck or misaligned at the mouth of the intake. Fig. A shows the printed pair; Fig. B shows the parts that make up each wheel — the hub and the individual rollers that press into its circumference.</p>
           <p>The wheels came out slightly too large to seat cleanly inside the intake design, so the fitment is being adjusted before the assembly goes back onto the robot.</p>
           <p>Figs. C through F are the CAD side of the same iteration — modeling and reviewing the chassis assembly and turret base plate in Onshape, then checking the printed parts against the model on the build floor.</p>
-          <table class="spec-table">
+          <table>
             <tr><td>Iteration</td><td>IT-02</td></tr>
             <tr><td>Subsystem</td><td>Intake</td></tr>
             <tr><td>Part</td><td>Vectored guide wheels</td></tr>
             <tr><td>Process</td><td>FDM / PLA</td></tr>
             <tr><td>Status</td><td>In fitment</td></tr>
           </table>
-          <div class="next-step-callout">
-            <div class="next-step-label">NEXT STEP</div>
-            <p>Resize the wheel diameter against the intake envelope, reprint, and re-test the assembly on the robot.</p>
-          </div>
+          <div class="next"><strong style="color:var(--blu);font-family:monospace;font-size:.75rem">NEXT STEP</strong><br>Resize the wheel diameter against the intake envelope, reprint, and re-test the assembly on the robot.</div>
         </aside>
       </div>
     </section>
     <section id="code">
-      <div class="section-header-row">
-        <div><div class="section-label">04 / SOFTWARE LAYER</div><h2>The Code</h2></div>
-        <div class="section-tag-right">JAVA // OPENCV // FTC SDK</div>
-      </div>
-      <div class="code-section-grid">
+      <div class="srow"><div><div class="slbl">04 / SOFTWARE LAYER</div><h2>The Code</h2></div><div class="stag">JAVA // OPENCV // FTC SDK</div></div>
+      <div class="cgrid">
         <div>
-          <div class="control-stack-label">CONTROL STACK</div>
-          <div class="stack-item"><div class="stack-num">01</div><div><div class="stack-top"><span class="stack-title">AUTONOMOUS</span><span class="stack-tech">OpenCV + AprilTags</span></div><p class="stack-desc">Vision-based localization and scoring during the 30s auto phase.</p></div></div>
-          <div class="stack-item"><div class="stack-num">02</div><div><div class="stack-top"><span class="stack-title">TELE-OP</span><span class="stack-tech">Java / FTC SDK</span></div><p class="stack-desc">Driver-controlled state machine with closed-loop PID on all actuators.</p></div></div>
-          <div class="stack-item"><div class="stack-num">03</div><div><div class="stack-top"><span class="stack-title">PERCEPTION</span><span class="stack-tech">ONNX Runtime</span></div><p class="stack-desc">On-device inference for specimen classification and target lock.</p></div></div>
-          <div class="stack-item"><div class="stack-num">04</div><div><div class="stack-top"><span class="stack-title">TELEMETRY</span><span class="stack-tech">FTC Dashboard</span></div><p class="stack-desc">Live tuning of gains, paths, and sensor offsets from the pit.</p></div></div>
+          <div style="font-family:monospace;font-size:.75rem;font-weight:800;color:var(--mut);margin-bottom:10px">CONTROL STACK</div>
+          <div class="sitem"><div style="font-family:monospace;font-weight:900;color:var(--blu)">01</div><div><strong>AUTONOMOUS</strong> <span style="font-family:monospace;font-size:.74rem;color:var(--blu)">OpenCV + AprilTags</span><p style="margin:2px 0 0;font-size:.86rem;color:var(--mut)">Vision-based localization and scoring during the 30s auto phase.</p></div></div>
+          <div class="sitem"><div style="font-family:monospace;font-weight:900;color:var(--blu)">02</div><div><strong>TELE-OP</strong> <span style="font-family:monospace;font-size:.74rem;color:var(--blu)">Java / FTC SDK</span><p style="margin:2px 0 0;font-size:.86rem;color:var(--mut)">Driver-controlled state machine with closed-loop PID on all actuators.</p></div></div>
+          <div class="sitem"><div style="font-family:monospace;font-weight:900;color:var(--blu)">03</div><div><strong>PERCEPTION</strong> <span style="font-family:monospace;font-size:.74rem;color:var(--blu)">ONNX Runtime</span><p style="margin:2px 0 0;font-size:.86rem;color:var(--mut)">On-device inference for specimen classification and target lock.</p></div></div>
+          <div class="sitem"><div style="font-family:monospace;font-weight:900;color:var(--blu)">04</div><div><strong>TELEMETRY</strong> <span style="font-family:monospace;font-size:.74rem;color:var(--blu)">FTC Dashboard</span><p style="margin:2px 0 0;font-size:.86rem;color:var(--mut)">Live tuning of gains, paths, and sensor offsets from the pit.</p></div></div>
         </div>
-        <div class="ide-window">
-          <div class="ide-topbar">
-            <div class="ide-dots-title"><div class="ide-dots"><span></span><span></span><span></span></div><span id="ide-filename">SUPERNOVA.ROBOT / AUTO.JAVA</span></div>
-            <div class="ide-tabs">
-              <button class="ide-tab-btn active" onclick="switchCodeTab('auto', this)">AUTONOMOUS</button>
-TELE-OP
-VISION
-
-
-
-// AUTO_PHASE.specimen_cycle()
+        <div class="ide">
+          <div class="itop">
+            <span id="fname">SUPERNOVA.ROBOT / AUTO.JAVA</span>
+            <div class="itabs">
+              <button class="ibtn act" onclick="tab('auto',this)">AUTONOMOUS</button>
+              <button class="ibtn" onclick="tab('teleop',this)">TELE-OP</button>
+              <button class="ibtn" onclick="tab('vision',this)">VISION</button>
+            </div>
+          </div>
+          <div class="ibody">
+<pre class="cpanel act" id="p-auto">// AUTO_PHASE.specimen_cycle()
 public void runOpMode() {
-drive.followTrajectory(toSample);
-while (opModeIsActive() && !claw.hasSpecimen()) {
-claw.extend();        // closed-loop PID
-if (vision.targetLocked()) break;
-}
-claw.retract();
-drive.followTrajectory(toHighBasket);
-lift.toPosition(HIGH_RUNG); // 0.0 -> 1.0
-claw.release();
-}
-// TELE_OP.state_machine()
+  drive.followTrajectory(toSample);
+  while (opModeIsActive() && !claw.hasSpecimen()) {
+    claw.extend();        // closed-loop PID
+    if (vision.targetLocked()) break;
+  }
+  claw.retract();
+  drive.followTrajectory(toHighBasket);
+  lift.toPosition(HIGH_RUNG); // 0.0 -> 1.0
+  claw.release();
+}</pre>
+<pre class="cpanel" id="p-teleop">// TELE_OP.state_machine()
 gamepad1.left_stick_y  -> drive.power;
 gamepad1.right_stick_x -> drive.turn;
 gamepad1.a             -> claw.toggle();
 gamepad2.dpad_up       -> lift.step(+0.05);
 gamepad2.dpad_down     -> lift.step(-0.05);
-// PID: Kp=2.4, Ki=0.02, Kd=0.8
-// VISION.lock_target()
+// PID: Kp=2.4, Ki=0.02, Kd=0.8</pre>
+<pre class="cpanel" id="p-vision">// VISION.lock_target()
 aprilTag = detector.detect(frame);
 if (aprilTag.id == TARGET_ID) {
-double err = aprilTag.center.x - frame.cx;
-drive.aim(err * GAIN);  // proportional aim
-if (abs(err) < TOL) state = SCORE;
+  double err = aprilTag.center.x - frame.cx;
+  drive.aim(err * GAIN);  // proportional aim
+  if (abs(err) < TOL) state = SCORE;
+}</pre>
+          </div>
+          <div class="ifoot"><span>UTF-8 // JAVA</span><span style="color:#60a5fa;font-weight:700">● COMPILED // 0 ERRORS</span><span id="fln">LN 12</span></div>
+        </div>
+      </div>
+    </section>
+    <section id="progress">
+      <div class="srow"><div><div class="slbl">05 // DESIGN PROCESS &amp; BUILD LOG</div><h2>How We Build &amp; Season Progress</h2></div><div class="stag">ITERATIVE METHODOLOGY</div></div>
+      <div class="grid3">
+        <div class="card"><h3>💡 Ideation</h3><p style="color:var(--mut);margin:0">We brainstorm multiple solutions before committing to a design.</p></div>
+        <div class="card"><h3>🧪 Prototype</h3><p style="color:var(--mut);margin:0">We quickly build and test concepts to discover what works in the real world.</p></div>
+        <div class="card"><h3>🔧 Iteration</h3><p style="color:var(--mut);margin:0">Every test gives us data that helps improve our next version.</p></div>
+        <div class="card"><h3>📊 Evaluate</h3><p style="color:var(--mut);margin:0">We compare designs based on reliability, performance, complexity, and repeatability.</p></div>
+        <div class="card"><h3>🏆 Compete</h3><p style="color:var(--mut);margin:0">Our final goal is a robot that performs consistently under competition conditions.</p></div>
+        <div class="card"><h3>🚀 Improve</h3><p style="color:var(--mut);margin:0">We keep learning throughout the season and carry those lessons into our next design.</p></div>
+      </div>
+      <div class="tl">
+        <div class="tli"><div style="font-family:monospace;color:var(--blu);font-size:.76rem;font-weight:800">LOG 01 // PHASE 01</div><h3 style="margin:3px 0">Concept &amp; Research</h3><p style="color:var(--mut);margin:0">Research the game, identify priorities, and develop initial robot concepts.</p></div>
+        <div class="tli"><div style="font-family:monospace;color:var(--blu);font-size:.76rem;font-weight:800">LOG 02 // PHASE 02</div><h3 style="margin:3px 0">Prototype</h3><p style="color:var(--mut);margin:0">Build early mechanisms and drivetrain prototypes to validate our ideas.</p></div>
+        <div class="tli"><div style="font-family:monospace;color:var(--blu);font-size:.76rem;font-weight:800">LOG 03 // PHASE 03</div><h3 style="margin:3px 0">Testing &amp; Iteration</h3><p style="color:var(--mut);margin:0">Test repeatedly, find weaknesses, and improve our robot's reliability.</p></div>
+        <div class="tli"><div style="font-family:monospace;color:var(--blu);font-size:.76rem;font-weight:800">LOG 04 // PHASE 04</div><h3 style="margin:3px 0">Competition Ready</h3><p style="color:var(--mut);margin:0">Finalize our systems, practice our strategy, and prepare for competition.</p></div>
+      </div>
+    </section>
+    <footer><div><strong>FTC TEAM 37186 — SUPERNOVA</strong> // ENGINEERING NOTEBOOK</div><div><a href="#top" style="color:var(--org);text-decoration:none;font-weight:700">↑ BACK TO TOP</a></div></footer>
+  </main>
+</div>
+<script>
+function tab(n,b){
+  document.querySelectorAll('.ibtn').forEach(x=>x.classList.remove('act'));
+  document.querySelectorAll('.cpanel').forEach(x=>x.classList.remove('act'));
+  b.classList.add('act');
+  document.getElementById('p-'+n).classList.add('act');
+  const m={auto:['SUPERNOVA.ROBOT / AUTO.JAVA','LN 12'],teleop:['SUPERNOVA.ROBOT / TELEOP.JAVA','LN 7'],vision:['SUPERNOVA.ROBOT / VISION.JAVA','LN 7']};
+  document.getElementById('fname').textContent=m[n][0];
+  document.getElementById('fln').textContent=m[n][1];
 }
-
-UTF-8 // JAVA● COMPILED // 0 ERRORSLN 12
-
-05 // DESIGN PROCESS & BUILD LOGHow We Build & Season Progress
-ITERATIVE METHODOLOGY
-
-
-💡IdeationWe brainstorm multiple solutions before committing to a design.
-🧪PrototypeWe quickly build and test concepts to discover what works in the real world.
-🔧IterationEvery test gives us data that helps improve our next version.
-📊EvaluateWe compare designs based on reliability, performance, complexity, and repeatability.
-🏆CompeteOur final goal is a robot that performs consistently under competition conditions.
-🚀ImproveWe keep learning throughout the season and carry those lessons into our next design.
-
-
-LOG 01 // PHASE 01Concept & ResearchResearch the game, identify priorities, and develop initial robot concepts.
-LOG 02 // PHASE 02PrototypeBuild early mechanisms and drivetrain prototypes to validate our ideas.
-LOG 03 // PHASE 03Testing & IterationTest repeatedly, find weaknesses, and improve our robot's reliability.
-LOG 04 // PHASE 04Competition ReadyFinalize our systems, practice our strategy, and prepare for competition.
-
-
-FTC TEAM 37186 — SUPERNOVA // ENGINEERING NOTEBOOK
-↑ BACK TO TOP
-
-
-
-
-function switchCodeTab(tabName, btn) {
-document.querySelectorAll('.ide-tab-btn').forEach(b => b.classList.remove('active'));
-document.querySelectorAll('.code-panel').forEach(p => p.classList.remove('active'));
-btn.classList.add('active');
-document.getElementById('panel-' + tabName).classList.add('active');
-const meta = { auto: { file: 'SUPERNOVA.ROBOT / AUTO.JAVA', lines: 'LN 12' }, teleop: { file: 'SUPERNOVA.ROBOT / TELEOP.JAVA', lines: 'LN 7' }, vision: { file: 'SUPERNOVA.ROBOT / VISION.JAVA', lines: 'LN 7' } };
-document.getElementById('ide-filename').textContent = meta[tabName].file;
-document.getElementById('ide-lines').textContent = meta[tabName].lines;
-}
+</script>
+</body>
+</html> 
