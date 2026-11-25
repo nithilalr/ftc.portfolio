@@ -127,24 +127,23 @@ footer{margin-top:20px;padding-top:16px;border-top:2px solid var(--ink);display:
         <div class="card"><h3>🔌 Electronics</h3><p style="color:var(--mut);margin:0">Clean wiring and organized electronics help us troubleshoot quickly and keep the robot competition-ready.</p></div>
       </div>
     </section>
-    <section id="iterations">
-      <div class="srow"><div><div class="slbl">03 / ITERATION LOG</div><h2>Iteration Log</h2></div><div class="stag">INTAKE DEVELOPMENT</div></div>
-      <div class="it-lay">
+       <section id="iterations">
+      <div class="srow"><div><div class="slbl">03 / ITERATION LOG</div><h2>Iteration Log</h2></div><div class="stag">IT-01 INTAKE &amp; IT-02 SHOOTER</div></div>
+      <div class="it-lay" style="margin-bottom:44px;padding-bottom:44px;border-bottom:1.5px dashed var(--bdr)">
         <div class="grid2">
           <div class="taped"><img src="fig-a-wheels.jpg" onerror="this.src='https://placehold.co'"><div class="cap">FIG. A — VECTORED WHEEL PAIR</div></div>
           <div class="taped"><img src="fig-b-parts.jpg" onerror="this.src='https://placehold.co'"><div class="cap">FIG. B — WHEEL PARTS &amp; ROLLER SET</div></div>
           <div class="taped"><img src="fig-c-floor1.jpg" onerror="this.src='https://placehold.co'"><div class="cap">FIG. C — BUILD FLOOR CAD CHECK</div></div>
           <div class="taped"><img src="fig-d-floor2.jpg" onerror="this.src='https://placehold.co'"><div class="cap">FIG. D — FITMENT &amp; FIELD TESTING</div></div>
-          <div class="taped"><img src="fig-e-chassis.jpg" onerror="this.src='https://placehold.co'"><div class="cap">FIG. E — ONSHAPE CHASSIS ASSEMBLY</div></div>
-          <div class="taped"><img src="fig-f-turret.jpg" onerror="this.src='https://placehold.co'"><div class="cap">FIG. F — TURRET BASE PLATE</div></div>
         </div>
         <aside class="notes">
+          <div style="font-family:monospace;font-size:.74rem;font-weight:800;color:var(--org);margin-bottom:4px">ITERATION 01 // INTAKE</div>
           <h3>Vectored Wheel Intake</h3>
           <p>In this iteration we moved the intake rollers over to vectored wheels, so the angled rollers pull game pieces in more smoothly and keep them from getting stuck or misaligned at the mouth of the intake. Fig. A shows the printed pair; Fig. B shows the parts that make up each wheel — the hub and the individual rollers that press into its circumference.</p>
           <p>The wheels came out slightly too large to seat cleanly inside the intake design, so the fitment is being adjusted before the assembly goes back onto the robot.</p>
-          <p>Figs. C through F are the CAD side of the same iteration — modeling and reviewing the chassis assembly and turret base plate in Onshape, then checking the printed parts against the model on the build floor.</p>
+          <p>Figs. C and D are the CAD and build-floor verification side of the same iteration — reviewing the assembly in Onshape and checking the printed parts against the model on the build floor.</p>
           <table>
-            <tr><td>Iteration</td><td>IT-02</td></tr>
+            <tr><td>Iteration</td><td>IT-01</td></tr>
             <tr><td>Subsystem</td><td>Intake</td></tr>
             <tr><td>Part</td><td>Vectored guide wheels</td></tr>
             <tr><td>Process</td><td>FDM / PLA</td></tr>
@@ -153,7 +152,31 @@ footer{margin-top:20px;padding-top:16px;border-top:2px solid var(--ink);display:
           <div class="next"><strong style="color:var(--blu);font-family:monospace;font-size:.75rem">NEXT STEP</strong><br>Resize the wheel diameter against the intake envelope, reprint, and re-test the assembly on the robot.</div>
         </aside>
       </div>
+      <div class="it-lay">
+        <div class="grid2">
+          <div class="taped"><img src="shooter-printed.jpg" onerror="this.src='https://placehold.co'"><div class="cap">FIG. A — 3D-PRINTED SHOOTER PROTOTYPE</div></div>
+          <div class="taped"><img src="shooter-cad1.jpg" onerror="this.src='https://placehold.co'"><div class="cap">FIG. B — SHOOTER CAD DESIGN V1</div></div>
+          <div class="taped"><img src="shooter-cad2.jpg" onerror="this.src='https://placehold.co'"><div class="cap">FIG. C — RIGIDITY &amp; MOUNTING GEOMETRY</div></div>
+          <div class="taped"><img src="shooter-cad3.jpg" onerror="this.src='https://placehold.co'"><div class="cap">FIG. D — ENVELOPE &amp; CLEARANCE REVIEW</div></div>
+        </div>
+        <aside class="notes">
+          <div style="font-family:monospace;font-size:.74rem;font-weight:800;color:var(--org);margin-bottom:4px">ITERATION 02 // SHOOTER</div>
+          <h3>Shooter Iteration</h3>
+          <p><strong>What We Had:</strong> Our original robot used an existing baseline shooter design that had noticeable flex during high-speed launches.</p>
+          <p><strong>What We Changed:</strong> We designed and 3D-printed a new rigid shooter structure (Fig. A) across three CAD layout revisions (Figs. B–D), stiffening the frame to reduce unwanted movement and improve shot accuracy.</p>
+          <p><strong>Problem:</strong> The new shooter assembly came out slightly too large to fit cleanly within our robot's mounting envelope.</p>
+          <table>
+            <tr><td>Iteration</td><td>IT-02</td></tr>
+            <tr><td>Subsystem</td><td>Shooter</td></tr>
+            <tr><td>Part</td><td>Rigid shooter assembly</td></tr>
+            <tr><td>Process</td><td>FDM / PLA</td></tr>
+            <tr><td>Status</td><td>In fitment</td></tr>
+          </table>
+          <div class="next"><strong style="color:var(--blu);font-family:monospace;font-size:.75rem">NEXT STEPS</strong><br>Resize the shooter to make it smaller while keeping the improved stability and accuracy of the new design.</div>
+        </aside>
+      </div>
     </section>
+
     <section id="code">
       <div class="srow"><div><div class="slbl">04 / SOFTWARE LAYER</div><h2>The Code</h2></div><div class="stag">JAVA // OPENCV // FTC SDK</div></div>
       <div class="cgrid">
